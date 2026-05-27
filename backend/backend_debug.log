@@ -1,0 +1,537 @@
+2026-05-25 11:49:08,227 - ecommerce_ai - [INFO] - Received chat request for session: test
+2026-05-25 11:49:08,229 - ecommerce_ai - [ERROR] - Error in chat endpoint: 'AsyncIOMotorLatentCommandCursor' object is not iterable
+Traceback (most recent call last):
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\api\chat.py", line 39, in chat_with_assistant
+    app = get_compiled_app()
+          ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\api\chat.py", line 16, in get_compiled_app
+    checkpointer = memory_manager.checkpointer
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\database\memory.py", line 23, in checkpointer
+    # MongoDBSaver requires a synchronous pymongo client
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langgraph\checkpoint\mongodb\saver.py", line 138, in __init__
+    _create_saver_indexes(
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langgraph\checkpoint\mongodb\saver.py", line 48, in _create_saver_indexes
+    indexes = list(collection.list_indexes())
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'AsyncIOMotorLatentCommandCursor' object is not iterable
+2026-05-25 11:50:11,367 - ecommerce_ai - [INFO] - Received chat request for session: test
+2026-05-25 11:50:11,444 - ecommerce_ai - [INFO] - LangGraph workflow compiled with MongoDB checkpointer.
+2026-05-25 11:50:11,446 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-25 11:50:11,515 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 11:50:16,598 - ecommerce_ai - [ERROR] - Agent failed after multiple retries: RetryError[<Future at 0x1f2a732a4e0 state=finished raised ChatGoogleGenerativeAIError>]
+2026-05-25 11:50:16,603 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: test
+2026-05-25 11:51:36,970 - ecommerce_ai - [INFO] - Received chat request for session: test
+2026-05-25 11:51:36,971 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-25 11:51:36,981 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 11:51:41,655 - ecommerce_ai - [ERROR] - Agent failed after multiple retries: RetryError[<Future at 0x1f2a7179640 state=finished raised ChatGoogleGenerativeAIError>]
+2026-05-25 11:51:41,658 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: test
+2026-05-25 11:53:03,064 - ecommerce_ai - [INFO] - Received chat request for session: test
+2026-05-25 11:53:03,226 - ecommerce_ai - [INFO] - LangGraph workflow compiled with MongoDB checkpointer.
+2026-05-25 11:53:03,227 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-25 11:53:03,244 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 11:53:05,008 - ecommerce_ai - [INFO] - Agent formulated final response.
+2026-05-25 11:53:05,015 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: test
+2026-05-25 11:53:05,021 - ecommerce_ai - [ERROR] - Error in chat endpoint: 1 validation error for ChatResponse
+text
+  Input should be a valid string [type=string_type, input_value=[{'type': 'text', 'text':...QC4rpiYxu3tgzTpBvhE='}}], input_type=list]
+    For further information visit https://errors.pydantic.dev/2.13/v/string_type
+Traceback (most recent call last):
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\api\chat.py", line 60, in chat_with_assistant
+    return ChatResponse(
+           ^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\pydantic\main.py", line 263, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for ChatResponse
+text
+  Input should be a valid string [type=string_type, input_value=[{'type': 'text', 'text':...QC4rpiYxu3tgzTpBvhE='}}], input_type=list]
+    For further information visit https://errors.pydantic.dev/2.13/v/string_type
+2026-05-25 11:53:49,830 - ecommerce_ai - [INFO] - Received chat request for session: test
+2026-05-25 11:53:49,857 - ecommerce_ai - [INFO] - LangGraph workflow compiled with MongoDB checkpointer.
+2026-05-25 11:53:49,859 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-25 11:53:49,872 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 11:53:51,241 - ecommerce_ai - [INFO] - Agent formulated final response.
+2026-05-25 11:53:51,244 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: test
+2026-05-25 11:55:18,298 - ecommerce_ai - [INFO] - Received chat request for session: default-session
+2026-05-25 11:55:18,349 - ecommerce_ai - [INFO] - LangGraph workflow compiled with MongoDB checkpointer.
+2026-05-25 11:55:18,350 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-25 11:55:18,375 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 11:55:20,673 - ecommerce_ai - [INFO] - Agent formulated final response.
+2026-05-25 11:55:20,680 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: default-session
+2026-05-25 11:55:43,833 - ecommerce_ai - [INFO] - Received chat request for session: default-session
+2026-05-25 11:55:43,834 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-25 11:55:43,847 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 11:55:45,708 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search']
+2026-05-25 11:55:46,335 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 11:55:48,916 - ecommerce_ai - [INFO] - Agent decided to call tools: ['budget_analyzer']
+2026-05-25 11:55:48,930 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 11:55:50,715 - ecommerce_ai - [INFO] - Agent decided to call tools: ['review_summarizer']
+2026-05-25 11:55:50,727 - ecommerce_ai - [ERROR] - Error in chat endpoint: Event loop is closed
+Traceback (most recent call last):
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\api\chat.py", line 50, in chat_with_assistant
+    final_state = await app.ainvoke(
+                  ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langgraph\pregel\main.py", line 4057, in ainvoke
+    async for chunk in self.astream(
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3407, in astream
+    async for _ in runner.atick(
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 396, in atick
+    await arun_with_retry(
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 706, in arun_with_retry
+    return await task.proc.ainvoke(task.input, config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 733, in ainvoke
+    input = await asyncio.create_task(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 501, in ainvoke
+    ret = await self.afunc(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langgraph\prebuilt\tool_node.py", line 858, in _afunc
+    outputs = await asyncio.gather(*coros)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langgraph\prebuilt\tool_node.py", line 1193, in _arun_one
+    return await self._execute_tool_async(tool_request, input_type, config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langgraph\prebuilt\tool_node.py", line 1153, in _execute_tool_async
+    content = _handle_tool_error(e, flag=self._handle_tool_errors)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langgraph\prebuilt\tool_node.py", line 434, in _handle_tool_error
+    content = flag(e)  # type: ignore [assignment, call-arg]
+              ^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langgraph\prebuilt\tool_node.py", line 391, in _default_handle_tool_errors
+    raise e
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langgraph\prebuilt\tool_node.py", line 1105, in _execute_tool_async
+    response = await tool.ainvoke(call_args, config)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langchain_core\tools\structured.py", line 68, in ainvoke
+    return await run_in_executor(config, self.invoke, input, config, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langchain_core\runnables\config.py", line 667, in run_in_executor
+    return await asyncio.get_running_loop().run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langchain_core\runnables\config.py", line 658, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langchain_core\tools\base.py", line 642, in invoke
+    return self.run(tool_input, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langchain_core\tools\base.py", line 1001, in run
+    raise error_to_raise
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langchain_core\tools\base.py", line 967, in run
+    response = context.run(self._run, *tool_args, **tool_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langchain_core\tools\structured.py", line 97, in _run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\tools\review_summarizer.py", line 38, in review_summarizer
+    summary = loop.run_until_complete(fetch_reviews())
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\tools\review_summarizer.py", line 19, in fetch_reviews
+    products = await cursor_p.to_list(length=1)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\motor\core.py", line 1683, in to_list
+    self._get_more(),
+    ^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\motor\core.py", line 1446, in _get_more
+    return self._refresh()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\motor\metaprogramming.py", line 75, in method
+    return framework.run_on_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\motor\frameworks\asyncio\__init__.py", line 85, in run_on_executor
+    return loop.run_in_executor(_EXECUTOR, functools.partial(fn, *args, **kwargs))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 850, in run_in_executor
+    self._check_closed()
+  File "C:\Users\Nethra R\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 541, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+During task with name 'tools' and id '8f142d3f-a7ba-ea07-f1c6-7062f28ef380'
+2026-05-25 12:03:32,904 - ecommerce_ai - [INFO] - Received chat request for session: test-recom
+2026-05-25 12:03:32,904 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-25 12:03:32,909 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 12:03:34,383 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search']
+2026-05-25 12:03:34,403 - ecommerce_ai - [ERROR] - Error in chat endpoint: Event loop is closed
+Traceback (most recent call last):
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\api\chat.py", line 50, in chat_with_assistant
+    final_state = await app.ainvoke(
+                  ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langgraph\pregel\main.py", line 4057, in ainvoke
+    async for chunk in self.astream(
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3407, in astream
+    async for _ in runner.atick(
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 396, in atick
+    await arun_with_retry(
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 706, in arun_with_retry
+    return await task.proc.ainvoke(task.input, config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 733, in ainvoke
+    input = await asyncio.create_task(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 501, in ainvoke
+    ret = await self.afunc(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langgraph\prebuilt\tool_node.py", line 858, in _afunc
+    outputs = await asyncio.gather(*coros)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langgraph\prebuilt\tool_node.py", line 1193, in _arun_one
+    return await self._execute_tool_async(tool_request, input_type, config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langgraph\prebuilt\tool_node.py", line 1153, in _execute_tool_async
+    content = _handle_tool_error(e, flag=self._handle_tool_errors)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langgraph\prebuilt\tool_node.py", line 434, in _handle_tool_error
+    content = flag(e)  # type: ignore [assignment, call-arg]
+              ^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langgraph\prebuilt\tool_node.py", line 391, in _default_handle_tool_errors
+    raise e
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langgraph\prebuilt\tool_node.py", line 1105, in _execute_tool_async
+    response = await tool.ainvoke(call_args, config)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langchain_core\tools\structured.py", line 68, in ainvoke
+    return await run_in_executor(config, self.invoke, input, config, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langchain_core\runnables\config.py", line 667, in run_in_executor
+    return await asyncio.get_running_loop().run_in_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\AppData\Local\Programs\Python\Python312\Lib\concurrent\futures\thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langchain_core\runnables\config.py", line 658, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langchain_core\tools\base.py", line 642, in invoke
+    return self.run(tool_input, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langchain_core\tools\base.py", line 1001, in run
+    raise error_to_raise
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langchain_core\tools\base.py", line 967, in run
+    response = context.run(self._run, *tool_args, **tool_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\langchain_core\tools\structured.py", line 97, in _run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\tools\product_search.py", line 18, in product_search
+    if budget:
+              ^
+  File "C:\Users\Nethra R\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\rag\retriever.py", line 28, in retrieve_context
+    products = await cursor.to_list(length=top_k)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\motor\core.py", line 1683, in to_list
+    self._get_more(),
+    ^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\motor\core.py", line 1446, in _get_more
+    return self._refresh()
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\motor\metaprogramming.py", line 75, in method
+    return framework.run_on_executor(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\OneDrive\Desktop\e-commerce\backend\.venv\Lib\site-packages\motor\frameworks\asyncio\__init__.py", line 85, in run_on_executor
+    return loop.run_in_executor(_EXECUTOR, functools.partial(fn, *args, **kwargs))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nethra R\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 850, in run_in_executor
+    self._check_closed()
+  File "C:\Users\Nethra R\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 541, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+During task with name 'tools' and id '0c8c6e52-3465-598c-9ffb-1bee9f75dd3f'
+2026-05-25 12:04:38,718 - ecommerce_ai - [INFO] - Received chat request for session: test-recom
+2026-05-25 12:04:38,738 - ecommerce_ai - [INFO] - LangGraph workflow compiled with MongoDB checkpointer.
+2026-05-25 12:04:38,739 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-25 12:04:38,752 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 12:04:42,156 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search']. Routing to ToolNode.
+2026-05-25 12:04:42,160 - ecommerce_ai - [INFO] - Executing tool: product_search for query 'smartphone' (budget: 40000.0)
+2026-05-25 12:04:42,199 - ecommerce_ai - [INFO] - product_search: Successfully retrieved context length 1478
+2026-05-25 12:04:42,202 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 12:04:46,431 - ecommerce_ai - [INFO] - Agent decided to call tools: ['budget_analyzer', 'review_summarizer']. Routing to ToolNode.
+2026-05-25 12:04:46,433 - ecommerce_ai - [INFO] - Executing tool: review_summarizer for product 'iPhone 15 Pro Max'
+2026-05-25 12:04:46,448 - ecommerce_ai - [INFO] - review_summarizer: Successfully fetched and summarized 1 reviews
+2026-05-25 12:04:46,450 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 12:04:51,485 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-05-25 12:04:51,490 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: test-recom
+2026-05-25 12:04:51,490 - ecommerce_ai - [INFO] - Extracting response text from a list of blocks.
+2026-05-25 12:04:51,490 - ecommerce_ai - [INFO] - Successfully serialized response for frontend.
+2026-05-25 12:07:12,971 - ecommerce_ai - [INFO] - Received chat request for session: default-session
+2026-05-25 12:07:13,006 - ecommerce_ai - [INFO] - LangGraph workflow compiled with MongoDB checkpointer.
+2026-05-25 12:07:13,006 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-25 12:07:13,036 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 12:07:16,998 - ecommerce_ai - [INFO] - Agent decided to call tools: ['review_summarizer']. Routing to ToolNode.
+2026-05-25 12:07:17,006 - ecommerce_ai - [INFO] - Executing tool: review_summarizer for product 'iPhone 15 Pro Max'
+2026-05-25 12:07:17,022 - ecommerce_ai - [INFO] - review_summarizer: Successfully fetched and summarized 1 reviews
+2026-05-25 12:07:17,026 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 12:07:20,399 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-05-25 12:07:20,408 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: default-session
+2026-05-25 12:07:20,408 - ecommerce_ai - [INFO] - Extracting response text from a list of blocks.
+2026-05-25 12:07:20,410 - ecommerce_ai - [INFO] - Successfully serialized response for frontend.
+2026-05-25 12:07:53,546 - ecommerce_ai - [INFO] - Received chat request for session: default-session
+2026-05-25 12:07:53,547 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-25 12:07:53,554 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 12:07:55,232 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search']. Routing to ToolNode.
+2026-05-25 12:07:55,240 - ecommerce_ai - [INFO] - Executing tool: product_search for query 'airpods headphones' (budget: None)
+2026-05-25 12:07:55,439 - ecommerce_ai - [INFO] - product_search: Successfully retrieved context length 1352
+2026-05-25 12:07:55,444 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 12:07:57,630 - ecommerce_ai - [INFO] - Agent decided to call tools: ['review_summarizer']. Routing to ToolNode.
+2026-05-25 12:07:57,638 - ecommerce_ai - [INFO] - Executing tool: review_summarizer for product 'Sony WH-1000XM5'
+2026-05-25 12:07:57,647 - ecommerce_ai - [INFO] - review_summarizer: Successfully fetched and summarized 1 reviews
+2026-05-25 12:07:57,653 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 12:08:01,313 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-05-25 12:08:01,322 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: default-session
+2026-05-25 12:08:01,323 - ecommerce_ai - [INFO] - Extracting response text from a list of blocks.
+2026-05-25 12:08:01,323 - ecommerce_ai - [INFO] - Successfully serialized response for frontend.
+2026-05-25 12:08:51,799 - ecommerce_ai - [INFO] - Received chat request for session: default-session
+2026-05-25 12:08:51,800 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-25 12:08:51,810 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 12:08:53,807 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search']. Routing to ToolNode.
+2026-05-25 12:08:53,817 - ecommerce_ai - [INFO] - Executing tool: product_search for query 'phone case airpod case protection nude cheap' (budget: None)
+2026-05-25 12:08:53,922 - ecommerce_ai - [INFO] - product_search: Successfully retrieved context length 1352
+2026-05-25 12:08:53,926 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 12:08:56,031 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-05-25 12:08:56,039 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: default-session
+2026-05-25 12:08:56,040 - ecommerce_ai - [INFO] - Extracting response text from a list of blocks.
+2026-05-25 12:08:56,043 - ecommerce_ai - [INFO] - Successfully serialized response for frontend.
+2026-05-25 14:11:41,355 - ecommerce_ai - [INFO] - Received chat request for session: default-session
+2026-05-25 14:11:41,357 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-25 14:11:41,371 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 14:11:43,965 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-05-25 14:11:43,972 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: default-session
+2026-05-25 14:11:43,973 - ecommerce_ai - [INFO] - Extracting response text from a list of blocks.
+2026-05-25 14:11:43,974 - ecommerce_ai - [INFO] - Successfully serialized response for frontend.
+2026-05-25 14:13:00,718 - ecommerce_ai - [INFO] - Received chat request for session: default-session
+2026-05-25 14:13:00,718 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-25 14:13:00,731 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 14:13:03,159 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search']. Routing to ToolNode.
+2026-05-25 14:13:03,166 - ecommerce_ai - [INFO] - Executing tool: product_search for query 'gaming laptop high gpu ai ml' (budget: 90000.0)
+2026-05-25 14:13:03,237 - ecommerce_ai - [INFO] - product_search: Successfully retrieved context length 1478
+2026-05-25 14:13:03,241 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 14:13:06,212 - ecommerce_ai - [INFO] - Agent decided to call tools: ['review_summarizer']. Routing to ToolNode.
+2026-05-25 14:13:06,221 - ecommerce_ai - [INFO] - Executing tool: review_summarizer for product 'Dell XPS 15'
+2026-05-25 14:13:06,228 - ecommerce_ai - [INFO] - review_summarizer: Successfully fetched and summarized 1 reviews
+2026-05-25 14:13:06,235 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 14:13:07,848 - ecommerce_ai - [INFO] - Agent decided to call tools: ['review_summarizer']. Routing to ToolNode.
+2026-05-25 14:13:07,856 - ecommerce_ai - [INFO] - Executing tool: review_summarizer for product 'MacBook Pro 16-inch (M3 Max)'
+2026-05-25 14:13:07,861 - ecommerce_ai - [WARNING] - review_summarizer: Could not find product 'MacBook Pro 16-inch (M3 Max)'
+2026-05-25 14:13:07,867 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 14:13:10,441 - ecommerce_ai - [INFO] - Agent decided to call tools: ['budget_analyzer']. Routing to ToolNode.
+2026-05-25 14:13:10,459 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 14:13:16,376 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-05-25 14:13:16,384 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: default-session
+2026-05-25 14:13:16,385 - ecommerce_ai - [INFO] - Extracting response text from a list of blocks.
+2026-05-25 14:13:16,385 - ecommerce_ai - [INFO] - Successfully serialized response for frontend.
+2026-05-25 15:47:51,261 - ecommerce_ai - [INFO] - Received chat request for session: default-session
+2026-05-25 15:47:51,445 - ecommerce_ai - [INFO] - LangGraph workflow compiled with MongoDB checkpointer.
+2026-05-25 15:47:51,446 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-25 15:47:51,477 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 15:48:18,878 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search']. Routing to ToolNode.
+2026-05-25 15:48:18,892 - ecommerce_ai - [INFO] - Executing tool: product_search for query 'gaming laptop' (budget: 1080.0)
+2026-05-25 15:48:19,439 - ecommerce_ai - [INFO] - product_search: Successfully retrieved context length 1444
+2026-05-25 15:48:19,444 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 15:48:24,338 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-05-25 15:48:24,347 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: default-session
+2026-05-25 15:48:24,347 - ecommerce_ai - [INFO] - Extracting response text from a list of blocks.
+2026-05-25 15:48:24,351 - ecommerce_ai - [INFO] - Successfully serialized response for frontend.
+2026-05-25 15:49:14,343 - ecommerce_ai - [INFO] - Received chat request for session: default-session
+2026-05-25 15:49:14,347 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-25 15:49:14,383 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 15:49:20,915 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search']. Routing to ToolNode.
+2026-05-25 15:49:20,931 - ecommerce_ai - [INFO] - Executing tool: product_search for query 'gaming laptop' (budget: 2400.0)
+2026-05-25 15:49:21,680 - ecommerce_ai - [INFO] - product_search: Successfully retrieved context length 1444
+2026-05-25 15:49:21,701 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 15:49:29,247 - ecommerce_ai - [INFO] - Agent decided to call tools: ['budget_analyzer']. Routing to ToolNode.
+2026-05-25 15:49:29,287 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 15:49:39,408 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-05-25 15:49:39,425 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: default-session
+2026-05-25 15:49:39,428 - ecommerce_ai - [INFO] - Extracting response text from a list of blocks.
+2026-05-25 15:49:39,435 - ecommerce_ai - [INFO] - Successfully serialized response for frontend.
+2026-05-25 15:57:59,878 - ecommerce_ai - [INFO] - Received chat request for session: default-session
+2026-05-25 15:57:59,879 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-25 15:57:59,893 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 15:58:23,589 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-05-25 15:58:23,596 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: default-session
+2026-05-25 15:58:23,597 - ecommerce_ai - [INFO] - Extracting response text from a list of blocks.
+2026-05-25 15:58:23,598 - ecommerce_ai - [INFO] - Successfully serialized response for frontend.
+2026-05-25 16:58:24,912 - ecommerce_ai - [INFO] - Received chat request for session: default-session
+2026-05-25 16:58:24,986 - ecommerce_ai - [INFO] - LangGraph workflow compiled with MongoDB checkpointer.
+2026-05-25 16:58:25,003 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-25 16:58:25,124 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 16:58:30,672 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-05-25 16:58:30,679 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: default-session
+2026-05-25 16:58:30,679 - ecommerce_ai - [INFO] - Extracting response text from a list of blocks.
+2026-05-25 16:58:30,681 - ecommerce_ai - [INFO] - Successfully serialized response for frontend.
+2026-05-25 17:02:38,411 - ecommerce_ai - [INFO] - Received chat request for session: default-session
+2026-05-25 17:02:38,412 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-25 17:02:38,422 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 17:02:40,445 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search']. Routing to ToolNode.
+2026-05-25 17:02:40,451 - ecommerce_ai - [INFO] - Executing tool: product_search for query 'door mat' (budget: None)
+2026-05-25 17:02:40,566 - ecommerce_ai - [INFO] - product_search: Successfully retrieved context length 1363
+2026-05-25 17:02:40,571 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-25 17:02:43,210 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-05-25 17:02:43,228 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: default-session
+2026-05-25 17:02:43,229 - ecommerce_ai - [INFO] - Extracting response text from a list of blocks.
+2026-05-25 17:02:43,230 - ecommerce_ai - [INFO] - Successfully serialized response for frontend.
+2026-05-26 14:33:13,455 - ecommerce_ai - [INFO] - Received chat request for session: default-session
+2026-05-26 14:33:13,573 - ecommerce_ai - [INFO] - LangGraph workflow compiled with MongoDB checkpointer.
+2026-05-26 14:33:13,574 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-26 14:33:13,601 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-26 14:33:19,036 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-05-26 14:33:19,044 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: default-session
+2026-05-26 14:33:19,044 - ecommerce_ai - [INFO] - Extracting response text from a list of blocks.
+2026-05-26 14:33:19,045 - ecommerce_ai - [INFO] - Successfully serialized response for frontend.
+2026-05-26 15:30:34,387 - ecommerce_ai - [INFO] - Received chat request for session: test-session-123
+2026-05-26 15:30:34,390 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-26 15:30:34,409 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-26 15:30:36,500 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search']. Routing to ToolNode.
+2026-05-26 15:30:36,507 - ecommerce_ai - [INFO] - Executing tool: product_search for query 'electronics' (budget: 500.0)
+2026-05-26 15:30:36,821 - ecommerce_ai - [INFO] - product_search: Successfully retrieved context length 1374
+2026-05-26 15:30:36,823 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-26 15:30:39,776 - ecommerce_ai - [INFO] - Agent decided to call tools: ['review_summarizer']. Routing to ToolNode.
+2026-05-26 15:30:39,779 - ecommerce_ai - [INFO] - Executing tool: review_summarizer for product 'Sony WH-1000XM5'
+2026-05-26 15:30:39,800 - ecommerce_ai - [INFO] - review_summarizer: Successfully fetched and summarized 1 reviews
+2026-05-26 15:30:39,801 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-26 15:30:43,905 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-05-26 15:30:43,909 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: test-session-123
+2026-05-26 15:30:43,910 - ecommerce_ai - [INFO] - Extracting response text from a list of blocks.
+2026-05-26 15:30:43,910 - ecommerce_ai - [INFO] - Successfully serialized response for frontend.
+2026-05-26 15:37:59,091 - ecommerce_ai - [INFO] - Received chat request for session: default-session
+2026-05-26 15:37:59,126 - ecommerce_ai - [INFO] - LangGraph workflow compiled with MongoDB checkpointer.
+2026-05-26 15:37:59,126 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-26 15:37:59,145 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-26 15:38:04,049 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-05-26 15:38:04,054 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: default-session
+2026-05-26 15:38:04,054 - ecommerce_ai - [INFO] - Extracting response text from a list of blocks.
+2026-05-26 15:38:04,054 - ecommerce_ai - [INFO] - Successfully serialized response for frontend.
+2026-05-26 15:38:36,912 - ecommerce_ai - [INFO] - Received chat request for session: default-session
+2026-05-26 15:38:36,912 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-26 15:38:36,922 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-26 15:38:39,106 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search']. Routing to ToolNode.
+2026-05-26 15:38:39,110 - ecommerce_ai - [INFO] - Executing tool: product_search for query 'flower vase' (budget: None, category: None)
+2026-05-26 15:38:40,236 - ecommerce_ai - [INFO] - product_search: Successfully retrieved context with 5 items
+2026-05-26 15:38:40,238 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-26 15:38:42,494 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-05-26 15:38:42,497 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: default-session
+2026-05-26 15:38:42,497 - ecommerce_ai - [INFO] - Extracting response text from a list of blocks.
+2026-05-26 15:38:42,497 - ecommerce_ai - [INFO] - Successfully serialized response for frontend.
+2026-05-26 15:39:51,232 - ecommerce_ai - [INFO] - Received chat request for session: default-session
+2026-05-26 15:39:51,232 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-26 15:39:51,239 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-26 15:39:54,625 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search']. Routing to ToolNode.
+2026-05-26 15:39:54,629 - ecommerce_ai - [INFO] - Executing tool: product_search for query 'dress' (budget: 2000.0, category: women's clothing)
+2026-05-26 15:39:55,850 - ecommerce_ai - [INFO] - product_search: Successfully retrieved context with 5 items
+2026-05-26 15:39:55,853 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-26 15:39:58,740 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search']. Routing to ToolNode.
+2026-05-26 15:39:58,743 - ecommerce_ai - [INFO] - Executing tool: product_search for query 'dress' (budget: None, category: None)
+2026-05-26 15:39:59,622 - ecommerce_ai - [INFO] - product_search: Successfully retrieved context with 5 items
+2026-05-26 15:39:59,625 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-26 15:40:02,224 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-05-26 15:40:02,228 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: default-session
+2026-05-26 15:40:02,228 - ecommerce_ai - [INFO] - Extracting response text from a list of blocks.
+2026-05-26 15:40:02,229 - ecommerce_ai - [INFO] - Successfully serialized response for frontend.
+2026-05-26 15:40:39,348 - ecommerce_ai - [INFO] - Received chat request for session: default-session
+2026-05-26 15:40:39,348 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-26 15:40:39,356 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-26 15:40:43,723 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search']. Routing to ToolNode.
+2026-05-26 15:40:43,726 - ecommerce_ai - [INFO] - Executing tool: product_search for query 'winter jacket' (budget: 60.0, category: None)
+2026-05-26 15:40:44,603 - ecommerce_ai - [INFO] - product_search: Successfully retrieved context with 5 items
+2026-05-26 15:40:44,606 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-26 15:40:48,303 - ecommerce_ai - [INFO] - Agent decided to call tools: ['budget_analyzer']. Routing to ToolNode.
+2026-05-26 15:40:48,309 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-26 15:40:51,684 - ecommerce_ai - [INFO] - Agent decided to call tools: ['review_summarizer']. Routing to ToolNode.
+2026-05-26 15:40:51,686 - ecommerce_ai - [INFO] - Executing tool: review_summarizer for product 'BIYLACLESEN Women's 3-in-1 Snowboard Jacket Winter Coats'
+2026-05-26 15:40:51,688 - ecommerce_ai - [WARNING] - review_summarizer: Could not find product 'BIYLACLESEN Women's 3-in-1 Snowboard Jacket Winter Coats'
+2026-05-26 15:40:51,689 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-26 15:40:53,721 - ecommerce_ai - [INFO] - Agent decided to call tools: ['review_summarizer']. Routing to ToolNode.
+2026-05-26 15:40:53,724 - ecommerce_ai - [INFO] - Executing tool: review_summarizer for product 'Mens Cotton Jacket'
+2026-05-26 15:40:53,726 - ecommerce_ai - [WARNING] - review_summarizer: Could not find product 'Mens Cotton Jacket'
+2026-05-26 15:40:53,729 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-26 15:41:00,466 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-05-26 15:41:00,469 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: default-session
+2026-05-26 15:41:00,470 - ecommerce_ai - [INFO] - Extracting response text from a list of blocks.
+2026-05-26 15:41:00,470 - ecommerce_ai - [INFO] - Successfully serialized response for frontend.
+2026-05-27 16:04:15,953 - ecommerce_ai - [INFO] - Received chat request for session: default-session
+2026-05-27 16:04:16,114 - ecommerce_ai - [INFO] - LangGraph workflow compiled with MongoDB checkpointer.
+2026-05-27 16:04:16,114 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-27 16:04:16,210 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-27 16:04:19,569 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search']. Routing to ToolNode.
+2026-05-27 16:04:19,572 - ecommerce_ai - [INFO] - Executing tool: product_search for query 'laptop' (budget: 1800.0, category: None)
+2026-05-27 16:04:20,706 - ecommerce_ai - [INFO] - product_search: Successfully retrieved context with 1 items
+2026-05-27 16:04:20,710 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-27 16:04:27,213 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-05-27 16:04:27,226 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: default-session
+2026-05-27 16:04:27,226 - ecommerce_ai - [INFO] - Extracting response text from a list of blocks.
+2026-05-27 16:04:27,226 - ecommerce_ai - [INFO] - Successfully serialized response for frontend.
+2026-05-27 16:04:43,408 - ecommerce_ai - [INFO] - Received chat request for session: default-session
+2026-05-27 16:04:43,410 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-27 16:04:43,425 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-27 16:04:45,999 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search']. Routing to ToolNode.
+2026-05-27 16:04:46,003 - ecommerce_ai - [INFO] - Executing tool: product_search for query 'sweater' (budget: 480.0, category: None)
+2026-05-27 16:04:46,929 - ecommerce_ai - [INFO] - product_search: Successfully retrieved context with 1 items
+2026-05-27 16:04:46,931 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-27 16:04:50,500 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search']. Routing to ToolNode.
+2026-05-27 16:04:50,504 - ecommerce_ai - [INFO] - Executing tool: product_search for query 'cardigan sweater pullover' (budget: 480.0, category: None)
+2026-05-27 16:04:51,548 - ecommerce_ai - [INFO] - product_search: Successfully retrieved context with 1 items
+2026-05-27 16:04:51,551 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-27 16:04:53,785 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search']. Routing to ToolNode.
+2026-05-27 16:04:53,788 - ecommerce_ai - [INFO] - Executing tool: product_search for query 'clothing' (budget: 480.0, category: None)
+2026-05-27 16:04:54,687 - ecommerce_ai - [INFO] - product_search: Successfully retrieved context with 5 items
+2026-05-27 16:04:54,689 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-27 16:05:00,676 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-05-27 16:05:00,681 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: default-session
+2026-05-27 16:05:00,681 - ecommerce_ai - [INFO] - Extracting response text from a list of blocks.
+2026-05-27 16:05:00,681 - ecommerce_ai - [INFO] - Successfully serialized response for frontend.
+2026-05-27 16:11:14,936 - ecommerce_ai - [INFO] - Received chat request for session: default-session
+2026-05-27 16:11:14,961 - ecommerce_ai - [INFO] - LangGraph workflow compiled with MongoDB checkpointer.
+2026-05-27 16:11:14,961 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-27 16:11:14,978 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-27 16:11:17,783 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-05-27 16:11:17,790 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: default-session
+2026-05-27 16:11:17,790 - ecommerce_ai - [INFO] - Extracting response text from a list of blocks.
+2026-05-27 16:11:17,792 - ecommerce_ai - [INFO] - Successfully serialized response for frontend.
+2026-05-27 16:12:24,036 - ecommerce_ai - [INFO] - Received chat request for session: default-session
+2026-05-27 16:12:24,038 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-27 16:12:24,053 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-27 16:12:26,767 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-05-27 16:12:26,775 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: default-session
+2026-05-27 16:12:26,776 - ecommerce_ai - [INFO] - Extracting response text from a list of blocks.
+2026-05-27 16:12:26,777 - ecommerce_ai - [INFO] - Successfully serialized response for frontend.
+2026-05-27 16:17:04,618 - ecommerce_ai - [INFO] - Received chat request for session: default-session
+2026-05-27 16:17:04,619 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-27 16:17:04,632 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-27 16:17:07,183 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-05-27 16:17:07,191 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: default-session
+2026-05-27 16:17:07,194 - ecommerce_ai - [INFO] - Extracting response text from a list of blocks.
+2026-05-27 16:17:07,195 - ecommerce_ai - [INFO] - Successfully serialized response for frontend.
+2026-05-27 16:17:24,077 - ecommerce_ai - [INFO] - Received chat request for session: default-session
+2026-05-27 16:17:24,078 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-27 16:17:24,089 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-27 16:17:29,694 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-05-27 16:17:29,701 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: default-session
+2026-05-27 16:17:29,701 - ecommerce_ai - [INFO] - Extracting response text from a list of blocks.
+2026-05-27 16:17:29,702 - ecommerce_ai - [INFO] - Successfully serialized response for frontend.
+2026-05-27 16:17:49,638 - ecommerce_ai - [INFO] - Received chat request for session: default-session
+2026-05-27 16:17:49,638 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-27 16:17:49,649 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-27 16:17:54,358 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search']. Routing to ToolNode.
+2026-05-27 16:17:54,365 - ecommerce_ai - [INFO] - Executing tool: product_search for query 'winter jacket coat sweater extreme weather' (budget: None, category: None)
+2026-05-27 16:17:55,975 - ecommerce_ai - [INFO] - product_search: Successfully retrieved context with 5 items
+2026-05-27 16:17:55,981 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-27 16:18:03,030 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-05-27 16:18:03,041 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: default-session
+2026-05-27 16:18:03,042 - ecommerce_ai - [INFO] - Extracting response text from a list of blocks.
+2026-05-27 16:18:03,042 - ecommerce_ai - [INFO] - Successfully serialized response for frontend.
+2026-05-27 16:18:24,620 - ecommerce_ai - [INFO] - Received chat request for session: default-session
+2026-05-27 16:18:24,621 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-05-27 16:18:24,635 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-05-27 16:18:27,560 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-05-27 16:18:27,575 - ecommerce_ai - [INFO] - LangGraph execution completed successfully for session: default-session
+2026-05-27 16:18:27,575 - ecommerce_ai - [INFO] - Extracting response text from a list of blocks.
+2026-05-27 16:18:27,576 - ecommerce_ai - [INFO] - Successfully serialized response for frontend.

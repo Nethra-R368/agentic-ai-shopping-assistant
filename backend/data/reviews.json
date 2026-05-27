@@ -1,0 +1,47 @@
+[
+  {
+    "id": "r1",
+    "product_id": "p1",
+    "user": "Alice",
+    "rating": 5,
+    "review_text": "Incredible machine. The M3 Max chews through 4K video editing without dropping a frame. Battery life is surprisingly good for this much power. Only downside is the high price, but it's worth it for professionals.",
+    "pros": ["Insane performance", "Great display", "Good battery for the power"],
+    "cons": ["Very expensive", "Heavy"]
+  },
+  {
+    "id": "r2",
+    "product_id": "p1",
+    "user": "Bob",
+    "rating": 4,
+    "review_text": "Excellent laptop for coding. Compiling large projects is blisteringly fast. I wish it had more ports, but the screen is beautiful.",
+    "pros": ["Fast compilation", "Screen quality"],
+    "cons": ["Needs more ports"]
+  },
+  {
+    "id": "r3",
+    "product_id": "p2",
+    "user": "Charlie",
+    "rating": 5,
+    "review_text": "The OLED screen is absolutely gorgeous. The RTX 4070 handles my 3D rendering tasks easily. It does get a bit warm under heavy load, but the performance is stellar.",
+    "pros": ["OLED Screen", "Strong GPU", "Premium build"],
+    "cons": ["Gets warm", "Battery life is mediocre"]
+  },
+  {
+    "id": "r4",
+    "product_id": "p3",
+    "user": "David",
+    "rating": 5,
+    "review_text": "The titanium build makes a huge difference; it's much lighter than my 14 Pro Max. The 5x camera is fantastic for concerts.",
+    "pros": ["Lightweight titanium", "5x Telephoto camera", "USB-C"],
+    "cons": ["Gets slightly warm during gaming"]
+  },
+  {
+    "id": "r5",
+    "product_id": "p4",
+    "user": "Eve",
+    "rating": 4,
+    "review_text": "Best noise cancellation I've ever experienced. Great for flights. They don't fold up as small as the XM4s, which is a bit annoying for travel.",
+    "pros": ["Top-tier ANC", "Comfortable", "Great sound"],
+    "cons": ["Doesn't fold compactly"]
+  }
+]

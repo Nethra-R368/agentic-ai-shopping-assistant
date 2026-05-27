@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: ecommerce-ai-backend
+    env: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: bash scripts/start.sh
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: MONGO_URI
+        sync: false
+      - key: ENVIRONMENT
+        value: production
+      - key: CORS_ORIGINS
+        sync: false # Set this to your frontend Vercel URL
