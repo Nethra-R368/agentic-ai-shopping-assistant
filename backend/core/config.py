@@ -6,6 +6,7 @@ class Settings(BaseSettings):
     Reads from .env file or environment variables.
     """
     GEMINI_API_KEY: str
+    SERPAPI_API_KEY: str = ""
     MONGO_URI: str = "mongodb://localhost:27017"
     PORT: int = 8000
     ENVIRONMENT: str = "development"
