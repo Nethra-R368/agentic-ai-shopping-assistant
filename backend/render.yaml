@@ -2,6 +2,7 @@ services:
   - type: web
     name: ecommerce-ai-backend
     env: python
+    plan: free
     rootDir: backend
     buildCommand: pip install -r requirements.txt
     startCommand: bash scripts/start.sh
