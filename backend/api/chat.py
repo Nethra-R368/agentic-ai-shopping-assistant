@@ -175,6 +175,8 @@ async def chat_with_assistant(request: ChatRequest):
 
         extracted_products = []
         for msg in reversed(final_state["messages"]):
+            if getattr(msg, "type", None) == "human":
+                break
             content_str = str(msg.content)
             if "PRODUCTS_JSON_START" in content_str and "PRODUCTS_JSON_END" in content_str:
                 try:
@@ -182,7 +184,7 @@ async def chat_with_assistant(request: ChatRequest):
                     end_idx = content_str.find("PRODUCTS_JSON_END")
                     json_text = content_str[start_idx:end_idx].strip()
                     products_list = json.loads(json_text)
-                    for item in products_list:
+                    for item in reversed(products_list):
                         product_obj = ProductSchema(
                             name=item.get("name"),
                             brand=item.get("brand"),
@@ -196,8 +198,7 @@ async def chat_with_assistant(request: ChatRequest):
                             source=item.get("source"),
                             seller=item.get("seller")
                         )
-                        extracted_products.append(product_obj)
-                    break
+                        extracted_products.insert(0, product_obj)
                 except Exception as ex:
                     logger.error(f"Failed to parse extracted product JSON: {ex}")
 
