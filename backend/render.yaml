@@ -7,6 +7,8 @@ services:
     buildCommand: pip install -r requirements.txt
     startCommand: bash scripts/start.sh
     envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
       - key: GEMINI_API_KEY
         sync: false
       - key: SERPAPI_API_KEY
