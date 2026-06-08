@@ -33,7 +33,7 @@ tools = [
 llm_with_tools = llm.bind_tools(tools)
 
 # 4. Create the ToolNode which will execute the functions when the LLM requests them
-tool_node = ToolNode(tools, handle_tool_errors=True)
+tool_node = ToolNode(tools)
 
 # 5. Define the Agent Node with Retry Logic
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=2, max=10))
