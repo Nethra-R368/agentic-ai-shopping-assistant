@@ -9,4 +9,5 @@ faiss-cpu==1.8.0
 motor>=3.6.0
 python-dotenv==1.0.1
 pydantic==2.7.2
+pydantic-settings>=2.0.0
 httpx
