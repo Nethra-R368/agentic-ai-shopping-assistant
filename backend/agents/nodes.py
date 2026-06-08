@@ -93,4 +93,4 @@ def chatbot_agent(state: AgentState):
         logger.error(f"Agent failed after multiple retries: {e}")
         # Fallback response
         from langchain_core.messages import AIMessage
-        return {"messages": [AIMessage(content="I'm sorry, I am experiencing temporary connectivity issues. Please try again in a moment.")]}
+        return {"messages": [AIMessage(content=f"I'm sorry, I encountered an internal error: {str(e)}. Please try again.")]}
