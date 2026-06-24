@@ -1750,3 +1750,390 @@ text
 2026-06-02 16:34:02,429 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
 2026-06-02 16:34:02,438 - ecommerce_ai - [INFO] - [TELEMETRY] 9. Response Serialization Time: 0.0000s
 2026-06-02 16:34:02,438 - ecommerce_ai - [INFO] - [TELEMETRY] 10. Total Latency (LangGraph): 6.0151s
+2026-06-04 17:28:11,963 - ecommerce_ai - [INFO] - [TELEMETRY] 1. Request Received
+2026-06-04 17:28:11,971 - ecommerce_ai - [INFO] - [TELEMETRY] 3. Fast-Path Detection Time: 0.0060s | Result: False
+2026-06-04 17:28:11,973 - ecommerce_ai - [INFO] - Executing Tier 2/3 LangGraph Pipeline
+2026-06-04 17:28:12,338 - ecommerce_ai - [INFO] - LangGraph workflow compiled with MongoDB checkpointer.
+2026-06-04 17:28:12,338 - ecommerce_ai - [INFO] - [TELEMETRY] 2. Memory Retrieval Time (and app compilation): 0.3639s
+2026-06-04 17:28:12,339 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-06-04 17:28:12,340 - ecommerce_ai - [INFO] - [TELEMETRY] 4. LangGraph Startup Time: 0.0010s
+2026-06-04 17:28:12,449 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-06-04 17:28:13,651 - ecommerce_ai - [INFO] - [TELEMETRY] 8. Gemini Reasoning Time (LangGraph): 1.2018s
+2026-06-04 17:28:13,653 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-06-04 17:28:13,673 - ecommerce_ai - [INFO] - [TELEMETRY] 9. Response Serialization Time: 0.0000s
+2026-06-04 17:28:13,674 - ecommerce_ai - [INFO] - [TELEMETRY] 10. Total Latency (LangGraph): 1.7110s
+2026-06-04 17:28:19,805 - ecommerce_ai - [INFO] - [TELEMETRY] 1. Request Received
+2026-06-04 17:28:19,806 - ecommerce_ai - [INFO] - [TELEMETRY] 3. Fast-Path Detection Time: 0.0000s | Result: False
+2026-06-04 17:28:19,808 - ecommerce_ai - [INFO] - Executing Tier 2/3 LangGraph Pipeline
+2026-06-04 17:28:19,810 - ecommerce_ai - [INFO] - [TELEMETRY] 2. Memory Retrieval Time (and app compilation): 0.0000s
+2026-06-04 17:28:19,812 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-06-04 17:28:19,817 - ecommerce_ai - [INFO] - [TELEMETRY] 4. LangGraph Startup Time: 0.0050s
+2026-06-04 17:28:19,833 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-06-04 17:28:20,925 - ecommerce_ai - [INFO] - [TELEMETRY] 8. Gemini Reasoning Time (LangGraph): 1.0886s
+2026-06-04 17:28:20,925 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-06-04 17:28:20,937 - ecommerce_ai - [INFO] - [TELEMETRY] 9. Response Serialization Time: 0.0000s
+2026-06-04 17:28:20,938 - ecommerce_ai - [INFO] - [TELEMETRY] 10. Total Latency (LangGraph): 1.1330s
+2026-06-04 17:28:58,227 - ecommerce_ai - [INFO] - [TELEMETRY] 1. Request Received
+2026-06-04 17:28:58,227 - ecommerce_ai - [INFO] - [TELEMETRY] 3. Fast-Path Detection Time: 0.0000s | Result: True
+2026-06-04 17:28:58,229 - ecommerce_ai - [INFO] - Executing Tier 1 Fast-Path Pipeline
+2026-06-04 17:28:58,233 - ecommerce_ai - [INFO] - Executing search concierge: product_search 'give me a cheap home decor set under 1 lakh in traditional style'
+2026-06-04 17:28:58,265 - ecommerce_ai - [INFO] - Executing real-time SerpAPI Google Shopping discovery query...
+2026-06-04 17:28:58,266 - ecommerce_ai - [INFO] - SerpAPI request: Initiating HTTP GET to Google Shopping...
+2026-06-04 17:29:00,988 - ecommerce_ai - [INFO] - SerpAPI request completed in 2.720s. Discovered 40 products.
+2026-06-04 17:29:00,989 - ecommerce_ai - [INFO] - SERPAPI CALL SUCCESSFUL (Latency: 2.723 seconds)
+2026-06-04 17:29:01,405 - ecommerce_ai - [INFO] - MongoDB Cache: 0/40 products were cache hits. Query cached successfully.
+2026-06-04 17:29:01,406 - ecommerce_ai - [INFO] - PRODUCT DISCOVERY PIPELINE EXECUTION COMPLETE (Total Latency: 3.171 seconds | Source: SerpAPI Google Shopping | Products Returned: 4)
+2026-06-04 17:29:01,407 - ecommerce_ai - [INFO] - product_search: Successfully discovered and parsed 4 products.
+2026-06-04 17:29:01,408 - ecommerce_ai - [INFO] - [TELEMETRY] 6. Tool Execution Time (includes SerpAPI): 3.1757s
+2026-06-04 17:29:02,200 - ecommerce_ai - [INFO] - [TELEMETRY] 8. Gemini Reasoning Time (Fast-Path): 0.7907s
+2026-06-04 17:29:02,201 - ecommerce_ai - [INFO] - [TELEMETRY] 9. Response Serialization Time: 0.0000s
+2026-06-04 17:29:02,202 - ecommerce_ai - [INFO] - [TELEMETRY] 10. Total Latency (Fast-Path): 3.9748s
+2026-06-05 14:58:50,650 - ecommerce_ai - [INFO] - [TELEMETRY] 1. Request Received
+2026-06-05 14:58:50,653 - ecommerce_ai - [INFO] - [TELEMETRY] 3. Fast-Path Detection Time: 0.0010s | Result: False
+2026-06-05 14:58:50,654 - ecommerce_ai - [INFO] - Executing Tier 2/3 LangGraph Pipeline
+2026-06-05 14:58:50,655 - ecommerce_ai - [INFO] - [TELEMETRY] 2. Memory Retrieval Time (and app compilation): 0.0000s
+2026-06-05 14:58:50,659 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-06-05 14:58:50,661 - ecommerce_ai - [INFO] - [TELEMETRY] 4. LangGraph Startup Time: 0.0046s
+2026-06-05 14:58:50,724 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-06-05 14:58:51,589 - ecommerce_ai - [INFO] - [TELEMETRY] 5. Agent Routing Time: 0.8640s | Decided to call tools: ['product_search']
+2026-06-05 14:58:51,590 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search']. Routing to ToolNode.
+2026-06-05 14:58:51,608 - ecommerce_ai - [INFO] - Executing search concierge: product_search 'minimalist home decor items under 5000 INR'
+2026-06-05 14:58:51,631 - ecommerce_ai - [INFO] - Executing real-time SerpAPI Google Shopping discovery query...
+2026-06-05 14:58:51,632 - ecommerce_ai - [INFO] - SerpAPI request: Initiating HTTP GET to Google Shopping...
+2026-06-05 14:58:54,874 - ecommerce_ai - [INFO] - SerpAPI request completed in 3.239s. Discovered 40 products.
+2026-06-05 14:58:54,878 - ecommerce_ai - [INFO] - SERPAPI CALL SUCCESSFUL (Latency: 3.247 seconds)
+2026-06-05 14:58:55,376 - ecommerce_ai - [INFO] - MongoDB Cache: 18/40 products were cache hits. Query cached successfully.
+2026-06-05 14:58:55,376 - ecommerce_ai - [INFO] - PRODUCT DISCOVERY PIPELINE EXECUTION COMPLETE (Total Latency: 3.764 seconds | Source: SerpAPI Google Shopping | Products Returned: 4)
+2026-06-05 14:58:55,378 - ecommerce_ai - [INFO] - product_search: Successfully discovered and parsed 4 products.
+2026-06-05 14:58:55,385 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-06-05 14:58:59,658 - ecommerce_ai - [INFO] - [TELEMETRY] 8. Gemini Reasoning Time (LangGraph): 4.2719s
+2026-06-05 14:58:59,660 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-06-05 14:58:59,671 - ecommerce_ai - [INFO] - [TELEMETRY] 9. Response Serialization Time: 0.0010s
+2026-06-05 14:58:59,672 - ecommerce_ai - [INFO] - [TELEMETRY] 10. Total Latency (LangGraph): 9.0218s
+2026-06-08 14:17:50,868 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-06-08 14:18:01,382 - ecommerce_ai - [INFO] - [TELEMETRY] 5. Agent Routing Time: 10.5118s | Decided to call tools: ['product_search', 'product_search']
+2026-06-08 14:18:01,382 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search', 'product_search']. Routing to ToolNode.
+2026-06-08 14:29:33,764 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-06-08 14:29:34,941 - ecommerce_ai - [INFO] - [TELEMETRY] 5. Agent Routing Time: 1.1755s | Decided to call tools: ['product_search', 'product_search']
+2026-06-08 14:29:34,941 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search', 'product_search']. Routing to ToolNode.
+2026-06-08 14:29:34,945 - ecommerce_ai - [INFO] - Executing search concierge: product_search 'broom suitcase luggage'
+2026-06-08 14:29:34,945 - ecommerce_ai - [ERROR] - Error checking query cache: 'NoneType' object has no attribute 'query_cache'
+2026-06-08 14:29:34,946 - ecommerce_ai - [INFO] - Executing real-time SerpAPI Google Shopping discovery query...
+2026-06-08 14:29:34,946 - ecommerce_ai - [INFO] - SerpAPI request: Initiating HTTP GET to Google Shopping...
+2026-06-08 14:29:35,250 - ecommerce_ai - [INFO] - Executing search concierge: product_search 'yellow decorative pillow'
+2026-06-08 14:29:35,250 - ecommerce_ai - [ERROR] - Error checking query cache: 'NoneType' object has no attribute 'query_cache'
+2026-06-08 14:29:35,250 - ecommerce_ai - [INFO] - Executing real-time SerpAPI Google Shopping discovery query...
+2026-06-08 14:29:35,250 - ecommerce_ai - [INFO] - SerpAPI request: Initiating HTTP GET to Google Shopping...
+2026-06-08 14:29:39,325 - ecommerce_ai - [INFO] - SerpAPI request completed in 4.378s. Discovered 40 products.
+2026-06-08 14:29:39,326 - ecommerce_ai - [INFO] - SERPAPI CALL SUCCESSFUL (Latency: 4.380 seconds)
+2026-06-08 14:29:39,326 - ecommerce_ai - [ERROR] - Failed to cache retrieved products in MongoDB: 'NoneType' object has no attribute 'cached_products'
+2026-06-08 14:29:39,326 - ecommerce_ai - [INFO] - PRODUCT DISCOVERY PIPELINE EXECUTION COMPLETE (Total Latency: 4.381 seconds | Source: SerpAPI Google Shopping | Products Returned: 4)
+2026-06-08 14:29:39,326 - ecommerce_ai - [INFO] - product_search: Successfully discovered and parsed 4 products.
+2026-06-08 14:29:43,776 - ecommerce_ai - [INFO] - SerpAPI request completed in 8.524s. Discovered 40 products.
+2026-06-08 14:29:43,777 - ecommerce_ai - [INFO] - SERPAPI CALL SUCCESSFUL (Latency: 8.527 seconds)
+2026-06-08 14:29:43,777 - ecommerce_ai - [ERROR] - Failed to cache retrieved products in MongoDB: 'NoneType' object has no attribute 'cached_products'
+2026-06-08 14:29:43,777 - ecommerce_ai - [INFO] - PRODUCT DISCOVERY PIPELINE EXECUTION COMPLETE (Total Latency: 8.527 seconds | Source: SerpAPI Google Shopping | Products Returned: 4)
+2026-06-08 14:29:43,777 - ecommerce_ai - [INFO] - product_search: Successfully discovered and parsed 4 products.
+2026-06-08 14:29:43,778 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-06-08 14:29:46,504 - ecommerce_ai - [INFO] - [TELEMETRY] 8. Gemini Reasoning Time (LangGraph): 2.7244s
+2026-06-08 14:29:46,504 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-06-08 14:39:26,552 - ecommerce_ai - [INFO] - [TELEMETRY] 1. Request Received
+2026-06-08 14:39:26,559 - ecommerce_ai - [INFO] - [TELEMETRY] 3. Fast-Path Detection Time: 0.0061s | Result: False
+2026-06-08 14:39:26,562 - ecommerce_ai - [INFO] - Executing Tier 2/3 LangGraph Pipeline
+2026-06-08 14:39:26,591 - ecommerce_ai - [INFO] - LangGraph workflow compiled with MongoDB checkpointer.
+2026-06-08 14:39:26,592 - ecommerce_ai - [INFO] - [TELEMETRY] 2. Memory Retrieval Time (and app compilation): 0.0286s
+2026-06-08 14:39:26,592 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-06-08 14:39:26,592 - ecommerce_ai - [INFO] - [TELEMETRY] 4. LangGraph Startup Time: 0.0000s
+2026-06-08 14:39:26,619 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-06-08 14:39:27,953 - ecommerce_ai - [INFO] - [TELEMETRY] 8. Gemini Reasoning Time (LangGraph): 1.3329s
+2026-06-08 14:39:27,953 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-06-08 14:39:27,962 - ecommerce_ai - [INFO] - [TELEMETRY] 9. Response Serialization Time: 0.0000s
+2026-06-08 14:39:27,964 - ecommerce_ai - [INFO] - [TELEMETRY] 10. Total Latency (LangGraph): 1.4127s
+2026-06-08 14:40:07,069 - ecommerce_ai - [INFO] - [TELEMETRY] 1. Request Received
+2026-06-08 14:40:07,070 - ecommerce_ai - [INFO] - [TELEMETRY] 3. Fast-Path Detection Time: 0.0000s | Result: False
+2026-06-08 14:40:07,071 - ecommerce_ai - [INFO] - Executing Tier 2/3 LangGraph Pipeline
+2026-06-08 14:40:07,072 - ecommerce_ai - [INFO] - [TELEMETRY] 2. Memory Retrieval Time (and app compilation): 0.0000s
+2026-06-08 14:40:07,076 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-06-08 14:40:07,077 - ecommerce_ai - [INFO] - [TELEMETRY] 4. LangGraph Startup Time: 0.0010s
+2026-06-08 14:40:07,096 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-06-08 14:40:19,079 - ecommerce_ai - [INFO] - [TELEMETRY] 5. Agent Routing Time: 11.9808s | Decided to call tools: ['product_search']
+2026-06-08 14:40:19,081 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search']. Routing to ToolNode.
+2026-06-08 14:40:19,088 - ecommerce_ai - [INFO] - Executing search concierge: product_search 'best budget smartphones 2024 for personal use'
+2026-06-08 14:40:19,090 - ecommerce_ai - [ERROR] - Error checking query cache: 'NoneType' object has no attribute 'query_cache'
+2026-06-08 14:40:19,091 - ecommerce_ai - [INFO] - Executing real-time SerpAPI Google Shopping discovery query...
+2026-06-08 14:40:19,091 - ecommerce_ai - [INFO] - SerpAPI request: Initiating HTTP GET to Google Shopping...
+2026-06-08 14:40:23,615 - ecommerce_ai - [INFO] - SerpAPI request completed in 4.514s. Discovered 40 products.
+2026-06-08 14:40:23,619 - ecommerce_ai - [INFO] - SERPAPI CALL SUCCESSFUL (Latency: 4.527 seconds)
+2026-06-08 14:40:23,620 - ecommerce_ai - [ERROR] - Failed to cache retrieved products in MongoDB: 'NoneType' object has no attribute 'cached_products'
+2026-06-08 14:40:23,625 - ecommerce_ai - [INFO] - PRODUCT DISCOVERY PIPELINE EXECUTION COMPLETE (Total Latency: 4.535 seconds | Source: SerpAPI Google Shopping | Products Returned: 4)
+2026-06-08 14:40:23,631 - ecommerce_ai - [INFO] - product_search: Successfully discovered and parsed 4 products.
+2026-06-08 14:40:23,656 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-06-08 14:40:26,726 - ecommerce_ai - [INFO] - [TELEMETRY] 8. Gemini Reasoning Time (LangGraph): 3.0641s
+2026-06-08 14:40:26,728 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-06-08 14:40:26,735 - ecommerce_ai - [INFO] - [TELEMETRY] 9. Response Serialization Time: 0.0000s
+2026-06-08 14:40:26,737 - ecommerce_ai - [INFO] - [TELEMETRY] 10. Total Latency (LangGraph): 19.6667s
+2026-06-08 14:42:49,109 - ecommerce_ai - [INFO] - [TELEMETRY] 1. Request Received
+2026-06-08 14:42:49,113 - ecommerce_ai - [INFO] - [TELEMETRY] 3. Fast-Path Detection Time: 0.0000s | Result: False
+2026-06-08 14:42:49,116 - ecommerce_ai - [INFO] - Executing Tier 2/3 LangGraph Pipeline
+2026-06-08 14:42:49,121 - ecommerce_ai - [INFO] - [TELEMETRY] 2. Memory Retrieval Time (and app compilation): 0.0000s
+2026-06-08 14:42:49,128 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-06-08 14:42:49,130 - ecommerce_ai - [INFO] - [TELEMETRY] 4. LangGraph Startup Time: 0.0015s
+2026-06-08 14:42:49,154 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-06-08 14:42:50,415 - ecommerce_ai - [INFO] - [TELEMETRY] 5. Agent Routing Time: 1.2589s | Decided to call tools: ['product_search']
+2026-06-08 14:42:50,419 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search']. Routing to ToolNode.
+2026-06-08 14:42:50,431 - ecommerce_ai - [INFO] - Executing search concierge: product_search 'gaming setup accessories for pastel cool tone bedroom aesthetic'
+2026-06-08 14:42:50,438 - ecommerce_ai - [ERROR] - Error checking query cache: 'NoneType' object has no attribute 'query_cache'
+2026-06-08 14:42:50,447 - ecommerce_ai - [INFO] - Executing real-time SerpAPI Google Shopping discovery query...
+2026-06-08 14:42:50,455 - ecommerce_ai - [INFO] - SerpAPI request: Initiating HTTP GET to Google Shopping...
+2026-06-08 14:42:55,017 - ecommerce_ai - [INFO] - SerpAPI request completed in 4.551s. Discovered 40 products.
+2026-06-08 14:42:55,020 - ecommerce_ai - [INFO] - SERPAPI CALL SUCCESSFUL (Latency: 4.566 seconds)
+2026-06-08 14:42:55,024 - ecommerce_ai - [ERROR] - Failed to cache retrieved products in MongoDB: 'NoneType' object has no attribute 'cached_products'
+2026-06-08 14:42:55,026 - ecommerce_ai - [INFO] - PRODUCT DISCOVERY PIPELINE EXECUTION COMPLETE (Total Latency: 4.587 seconds | Source: SerpAPI Google Shopping | Products Returned: 4)
+2026-06-08 14:42:55,031 - ecommerce_ai - [INFO] - product_search: Successfully discovered and parsed 4 products.
+2026-06-08 14:42:55,046 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-06-08 14:42:58,503 - ecommerce_ai - [INFO] - [TELEMETRY] 8. Gemini Reasoning Time (LangGraph): 3.4541s
+2026-06-08 14:42:58,505 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-06-08 14:42:58,515 - ecommerce_ai - [INFO] - [TELEMETRY] 9. Response Serialization Time: 0.0010s
+2026-06-08 14:42:58,529 - ecommerce_ai - [INFO] - [TELEMETRY] 10. Total Latency (LangGraph): 9.4199s
+2026-06-08 14:44:21,128 - ecommerce_ai - [INFO] - [TELEMETRY] 1. Request Received
+2026-06-08 14:44:21,129 - ecommerce_ai - [INFO] - [TELEMETRY] 3. Fast-Path Detection Time: 0.0000s | Result: False
+2026-06-08 14:44:21,130 - ecommerce_ai - [INFO] - Executing Tier 2/3 LangGraph Pipeline
+2026-06-08 14:44:21,131 - ecommerce_ai - [INFO] - [TELEMETRY] 2. Memory Retrieval Time (and app compilation): 0.0000s
+2026-06-08 14:44:21,132 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-06-08 14:44:21,133 - ecommerce_ai - [INFO] - [TELEMETRY] 4. LangGraph Startup Time: 0.0015s
+2026-06-08 14:44:21,140 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-06-08 14:44:22,294 - ecommerce_ai - [INFO] - [TELEMETRY] 5. Agent Routing Time: 1.1527s | Decided to call tools: ['product_search', 'product_search']
+2026-06-08 14:44:22,297 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search', 'product_search']. Routing to ToolNode.
+2026-06-08 14:44:22,320 - ecommerce_ai - [INFO] - Executing search concierge: product_search 'pastel aesthetic flower vase for cool tone room'
+2026-06-08 14:44:22,321 - ecommerce_ai - [ERROR] - Error checking query cache: 'NoneType' object has no attribute 'query_cache'
+2026-06-08 14:44:22,325 - ecommerce_ai - [INFO] - Executing real-time SerpAPI Google Shopping discovery query...
+2026-06-08 14:44:22,328 - ecommerce_ai - [INFO] - SerpAPI request: Initiating HTTP GET to Google Shopping...
+2026-06-08 14:44:23,453 - ecommerce_ai - [INFO] - Executing search concierge: product_search 'pastel home decor accessories for cool tone bedroom'
+2026-06-08 14:44:23,454 - ecommerce_ai - [ERROR] - Error checking query cache: 'NoneType' object has no attribute 'query_cache'
+2026-06-08 14:44:23,454 - ecommerce_ai - [INFO] - Executing real-time SerpAPI Google Shopping discovery query...
+2026-06-08 14:44:23,455 - ecommerce_ai - [INFO] - SerpAPI request: Initiating HTTP GET to Google Shopping...
+2026-06-08 14:44:26,367 - ecommerce_ai - [INFO] - SerpAPI request completed in 4.034s. Discovered 40 products.
+2026-06-08 14:44:26,370 - ecommerce_ai - [INFO] - SERPAPI CALL SUCCESSFUL (Latency: 4.041 seconds)
+2026-06-08 14:44:26,372 - ecommerce_ai - [ERROR] - Failed to cache retrieved products in MongoDB: 'NoneType' object has no attribute 'cached_products'
+2026-06-08 14:44:26,374 - ecommerce_ai - [INFO] - PRODUCT DISCOVERY PIPELINE EXECUTION COMPLETE (Total Latency: 4.053 seconds | Source: SerpAPI Google Shopping | Products Returned: 4)
+2026-06-08 14:44:26,377 - ecommerce_ai - [INFO] - product_search: Successfully discovered and parsed 4 products.
+2026-06-08 14:44:26,528 - ecommerce_ai - [INFO] - SerpAPI request completed in 3.068s. Discovered 40 products.
+2026-06-08 14:44:26,531 - ecommerce_ai - [INFO] - SERPAPI CALL SUCCESSFUL (Latency: 3.075 seconds)
+2026-06-08 14:44:26,533 - ecommerce_ai - [ERROR] - Failed to cache retrieved products in MongoDB: 'NoneType' object has no attribute 'cached_products'
+2026-06-08 14:44:26,536 - ecommerce_ai - [INFO] - PRODUCT DISCOVERY PIPELINE EXECUTION COMPLETE (Total Latency: 3.081 seconds | Source: SerpAPI Google Shopping | Products Returned: 4)
+2026-06-08 14:44:26,538 - ecommerce_ai - [INFO] - product_search: Successfully discovered and parsed 4 products.
+2026-06-08 14:44:26,557 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-06-08 14:44:30,752 - ecommerce_ai - [INFO] - [TELEMETRY] 8. Gemini Reasoning Time (LangGraph): 4.1930s
+2026-06-08 14:44:30,752 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-06-08 14:44:30,761 - ecommerce_ai - [INFO] - [TELEMETRY] 9. Response Serialization Time: 0.0000s
+2026-06-08 14:44:30,764 - ecommerce_ai - [INFO] - [TELEMETRY] 10. Total Latency (LangGraph): 9.6359s
+2026-06-08 15:00:35,824 - ecommerce_ai - [INFO] - [TELEMETRY] 1. Request Received
+2026-06-08 15:00:35,826 - ecommerce_ai - [INFO] - [TELEMETRY] 3. Fast-Path Detection Time: 0.0000s | Result: False
+2026-06-08 15:00:35,828 - ecommerce_ai - [INFO] - Executing Tier 2/3 LangGraph Pipeline
+2026-06-08 15:00:35,832 - ecommerce_ai - [INFO] - [TELEMETRY] 2. Memory Retrieval Time (and app compilation): 0.0000s
+2026-06-08 15:00:35,842 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-06-08 15:00:35,848 - ecommerce_ai - [INFO] - [TELEMETRY] 4. LangGraph Startup Time: 0.0066s
+2026-06-08 15:00:35,863 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-06-08 15:00:37,190 - ecommerce_ai - [INFO] - [TELEMETRY] 5. Agent Routing Time: 1.3249s | Decided to call tools: ['product_search']
+2026-06-08 15:00:37,191 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search']. Routing to ToolNode.
+2026-06-08 15:00:37,199 - ecommerce_ai - [INFO] - Executing search concierge: product_search 'yellow velvet decorative pillow 18x18 or 20x20'
+2026-06-08 15:00:37,204 - ecommerce_ai - [ERROR] - Error checking query cache: 'NoneType' object has no attribute 'query_cache'
+2026-06-08 15:00:37,207 - ecommerce_ai - [INFO] - Executing real-time SerpAPI Google Shopping discovery query...
+2026-06-08 15:00:37,212 - ecommerce_ai - [INFO] - SerpAPI request: Initiating HTTP GET to Google Shopping...
+2026-06-08 15:00:41,792 - ecommerce_ai - [INFO] - SerpAPI request completed in 4.564s. Discovered 40 products.
+2026-06-08 15:00:41,795 - ecommerce_ai - [INFO] - SERPAPI CALL SUCCESSFUL (Latency: 4.583 seconds)
+2026-06-08 15:00:41,796 - ecommerce_ai - [ERROR] - Failed to cache retrieved products in MongoDB: 'NoneType' object has no attribute 'cached_products'
+2026-06-08 15:00:41,798 - ecommerce_ai - [INFO] - PRODUCT DISCOVERY PIPELINE EXECUTION COMPLETE (Total Latency: 4.594 seconds | Source: SerpAPI Google Shopping | Products Returned: 4)
+2026-06-08 15:00:41,802 - ecommerce_ai - [INFO] - product_search: Successfully discovered and parsed 4 products.
+2026-06-08 15:00:41,814 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-06-08 15:00:45,115 - ecommerce_ai - [INFO] - [TELEMETRY] 8. Gemini Reasoning Time (LangGraph): 3.2969s
+2026-06-08 15:00:45,120 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-06-08 15:00:45,149 - ecommerce_ai - [INFO] - [TELEMETRY] 9. Response Serialization Time: 0.0010s
+2026-06-08 15:00:45,156 - ecommerce_ai - [INFO] - [TELEMETRY] 10. Total Latency (LangGraph): 9.3323s
+2026-06-08 15:14:54,939 - ecommerce_ai - [INFO] - [TELEMETRY] 1. Request Received
+2026-06-08 15:14:54,943 - ecommerce_ai - [INFO] - [TELEMETRY] 3. Fast-Path Detection Time: 0.0030s | Result: False
+2026-06-08 15:14:54,944 - ecommerce_ai - [INFO] - Executing Tier 2/3 LangGraph Pipeline
+2026-06-08 15:14:54,968 - ecommerce_ai - [INFO] - LangGraph workflow compiled with MongoDB checkpointer.
+2026-06-08 15:14:54,970 - ecommerce_ai - [INFO] - [TELEMETRY] 2. Memory Retrieval Time (and app compilation): 0.0247s
+2026-06-08 15:14:54,973 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-06-08 15:14:54,973 - ecommerce_ai - [INFO] - [TELEMETRY] 4. LangGraph Startup Time: 0.0000s
+2026-06-08 15:14:55,012 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-06-08 15:14:56,062 - ecommerce_ai - [INFO] - [TELEMETRY] 5. Agent Routing Time: 1.0471s | Decided to call tools: ['product_search', 'product_search']
+2026-06-08 15:14:56,063 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search', 'product_search']. Routing to ToolNode.
+2026-06-08 15:14:56,080 - ecommerce_ai - [INFO] - Executing search concierge: product_search 'yellow velvet decorative pillow'
+2026-06-08 15:14:56,082 - ecommerce_ai - [ERROR] - Error checking query cache: 'NoneType' object has no attribute 'query_cache'
+2026-06-08 15:14:56,082 - ecommerce_ai - [INFO] - Executing real-time SerpAPI Google Shopping discovery query...
+2026-06-08 15:14:56,088 - ecommerce_ai - [INFO] - SerpAPI request: Initiating HTTP GET to Google Shopping...
+2026-06-08 15:14:57,293 - ecommerce_ai - [INFO] - Executing search concierge: product_search 'hardline voyageur broom bag'
+2026-06-08 15:14:57,294 - ecommerce_ai - [ERROR] - Error checking query cache: 'NoneType' object has no attribute 'query_cache'
+2026-06-08 15:14:57,294 - ecommerce_ai - [INFO] - Executing real-time SerpAPI Google Shopping discovery query...
+2026-06-08 15:14:57,295 - ecommerce_ai - [INFO] - SerpAPI request: Initiating HTTP GET to Google Shopping...
+2026-06-08 15:15:00,437 - ecommerce_ai - [INFO] - SerpAPI request completed in 3.140s. Discovered 3 products.
+2026-06-08 15:15:00,442 - ecommerce_ai - [INFO] - SERPAPI CALL SUCCESSFUL (Latency: 3.146 seconds)
+2026-06-08 15:15:00,443 - ecommerce_ai - [ERROR] - Failed to cache retrieved products in MongoDB: 'NoneType' object has no attribute 'cached_products'
+2026-06-08 15:15:00,447 - ecommerce_ai - [INFO] - PRODUCT DISCOVERY PIPELINE EXECUTION COMPLETE (Total Latency: 3.152 seconds | Source: SerpAPI Google Shopping | Products Returned: 3)
+2026-06-08 15:15:00,451 - ecommerce_ai - [INFO] - product_search: Successfully discovered and parsed 3 products.
+2026-06-08 15:15:01,062 - ecommerce_ai - [INFO] - SerpAPI request completed in 4.959s. Discovered 40 products.
+2026-06-08 15:15:01,071 - ecommerce_ai - [INFO] - SERPAPI CALL SUCCESSFUL (Latency: 4.981 seconds)
+2026-06-08 15:15:01,075 - ecommerce_ai - [ERROR] - Failed to cache retrieved products in MongoDB: 'NoneType' object has no attribute 'cached_products'
+2026-06-08 15:15:01,086 - ecommerce_ai - [INFO] - PRODUCT DISCOVERY PIPELINE EXECUTION COMPLETE (Total Latency: 5.005 seconds | Source: SerpAPI Google Shopping | Products Returned: 4)
+2026-06-08 15:15:01,089 - ecommerce_ai - [INFO] - product_search: Successfully discovered and parsed 4 products.
+2026-06-08 15:15:01,096 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-06-08 15:15:04,131 - ecommerce_ai - [INFO] - [TELEMETRY] 8. Gemini Reasoning Time (LangGraph): 3.0307s
+2026-06-08 15:15:04,131 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-06-08 15:15:04,138 - ecommerce_ai - [INFO] - [TELEMETRY] 9. Response Serialization Time: 0.0010s
+2026-06-08 15:15:04,143 - ecommerce_ai - [INFO] - [TELEMETRY] 10. Total Latency (LangGraph): 9.2039s
+2026-06-08 15:41:11,177 - ecommerce_ai - [INFO] - [TELEMETRY] 1. Request Received
+2026-06-08 15:41:11,178 - ecommerce_ai - [INFO] - [TELEMETRY] 3. Fast-Path Detection Time: 0.0000s | Result: False
+2026-06-08 15:41:11,179 - ecommerce_ai - [INFO] - Executing Tier 2/3 LangGraph Pipeline
+2026-06-08 15:41:11,180 - ecommerce_ai - [INFO] - [TELEMETRY] 2. Memory Retrieval Time (and app compilation): 0.0000s
+2026-06-08 15:41:11,182 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-06-08 15:41:11,183 - ecommerce_ai - [INFO] - [TELEMETRY] 4. LangGraph Startup Time: 0.0020s
+2026-06-08 15:41:11,199 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-06-08 15:41:15,128 - ecommerce_ai - [INFO] - [TELEMETRY] 5. Agent Routing Time: 3.9276s | Decided to call tools: ['product_search']
+2026-06-08 15:41:15,130 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search']. Routing to ToolNode.
+2026-06-08 15:41:15,147 - ecommerce_ai - [INFO] - Executing search concierge: product_search 'yellow velvet throw blanket high quality affordable'
+2026-06-08 15:41:15,150 - ecommerce_ai - [ERROR] - Error checking query cache: 'NoneType' object has no attribute 'query_cache'
+2026-06-08 15:41:15,151 - ecommerce_ai - [INFO] - Executing real-time SerpAPI Google Shopping discovery query...
+2026-06-08 15:41:15,157 - ecommerce_ai - [INFO] - SerpAPI request: Initiating HTTP GET to Google Shopping...
+2026-06-08 15:41:22,311 - ecommerce_ai - [INFO] - SerpAPI request completed in 7.148s. Discovered 40 products.
+2026-06-08 15:41:22,314 - ecommerce_ai - [INFO] - SERPAPI CALL SUCCESSFUL (Latency: 7.157 seconds)
+2026-06-08 15:41:22,315 - ecommerce_ai - [ERROR] - Failed to cache retrieved products in MongoDB: 'NoneType' object has no attribute 'cached_products'
+2026-06-08 15:41:22,316 - ecommerce_ai - [INFO] - PRODUCT DISCOVERY PIPELINE EXECUTION COMPLETE (Total Latency: 7.166 seconds | Source: SerpAPI Google Shopping | Products Returned: 4)
+2026-06-08 15:41:22,316 - ecommerce_ai - [INFO] - product_search: Successfully discovered and parsed 4 products.
+2026-06-08 15:41:22,321 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-06-08 15:41:25,034 - ecommerce_ai - [INFO] - [TELEMETRY] 8. Gemini Reasoning Time (LangGraph): 2.7094s
+2026-06-08 15:41:25,037 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-06-08 15:41:25,047 - ecommerce_ai - [INFO] - [TELEMETRY] 9. Response Serialization Time: 0.0000s
+2026-06-08 15:41:25,048 - ecommerce_ai - [INFO] - [TELEMETRY] 10. Total Latency (LangGraph): 13.8709s
+2026-06-08 15:48:43,755 - ecommerce_ai - [INFO] - [TELEMETRY] 1. Request Received
+2026-06-08 15:48:43,755 - ecommerce_ai - [INFO] - [TELEMETRY] Multimodal Image Received | Size: 35.12 KB
+2026-06-08 15:48:43,756 - ecommerce_ai - [INFO] - [TELEMETRY] Fast-Path Skipped: True (Multimodal Image detected)
+2026-06-08 15:48:43,756 - ecommerce_ai - [INFO] - [TELEMETRY] 3. Fast-Path Detection Time: 0.0010s | Result: False
+2026-06-08 15:48:43,756 - ecommerce_ai - [INFO] - Executing Tier 2/3 LangGraph Pipeline
+2026-06-08 15:48:43,756 - ecommerce_ai - [INFO] - [TELEMETRY] Route Selected: Multimodal Vision Pipeline
+2026-06-08 15:48:43,756 - ecommerce_ai - [INFO] - [TELEMETRY] Gemini Vision Invoked: True
+2026-06-08 15:48:43,757 - ecommerce_ai - [INFO] - [TELEMETRY] 2. Memory Retrieval Time (and app compilation): 0.0000s
+2026-06-08 15:48:43,757 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-06-08 15:48:43,757 - ecommerce_ai - [INFO] - [TELEMETRY] 4. LangGraph Startup Time: 0.0000s
+2026-06-08 15:48:43,762 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-06-08 15:48:45,510 - ecommerce_ai - [INFO] - [TELEMETRY] 5. Agent Routing Time: 1.7464s | Decided to call tools: ['product_search', 'product_search']
+2026-06-08 15:48:45,511 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search', 'product_search']. Routing to ToolNode.
+2026-06-08 15:48:45,518 - ecommerce_ai - [INFO] - Executing search concierge: product_search 'gold necklace for red dress'
+2026-06-08 15:48:45,519 - ecommerce_ai - [ERROR] - Error checking query cache: 'NoneType' object has no attribute 'query_cache'
+2026-06-08 15:48:45,519 - ecommerce_ai - [INFO] - Executing real-time SerpAPI Google Shopping discovery query...
+2026-06-08 15:48:45,519 - ecommerce_ai - [INFO] - SerpAPI request: Initiating HTTP GET to Google Shopping...
+2026-06-08 15:48:46,094 - ecommerce_ai - [INFO] - Executing search concierge: product_search 'gold watch for women elegant'
+2026-06-08 15:48:46,094 - ecommerce_ai - [ERROR] - Error checking query cache: 'NoneType' object has no attribute 'query_cache'
+2026-06-08 15:48:46,094 - ecommerce_ai - [INFO] - Executing real-time SerpAPI Google Shopping discovery query...
+2026-06-08 15:48:46,095 - ecommerce_ai - [INFO] - SerpAPI request: Initiating HTTP GET to Google Shopping...
+2026-06-08 15:48:49,691 - ecommerce_ai - [INFO] - SerpAPI request completed in 4.170s. Discovered 40 products.
+2026-06-08 15:48:49,691 - ecommerce_ai - [INFO] - SERPAPI CALL SUCCESSFUL (Latency: 4.173 seconds)
+2026-06-08 15:48:49,692 - ecommerce_ai - [ERROR] - Failed to cache retrieved products in MongoDB: 'NoneType' object has no attribute 'cached_products'
+2026-06-08 15:48:49,692 - ecommerce_ai - [INFO] - PRODUCT DISCOVERY PIPELINE EXECUTION COMPLETE (Total Latency: 4.174 seconds | Source: SerpAPI Google Shopping | Products Returned: 4)
+2026-06-08 15:48:49,693 - ecommerce_ai - [INFO] - product_search: Successfully discovered and parsed 4 products.
+2026-06-08 15:48:51,231 - ecommerce_ai - [INFO] - SerpAPI request completed in 5.133s. Discovered 40 products.
+2026-06-08 15:48:51,232 - ecommerce_ai - [INFO] - SERPAPI CALL SUCCESSFUL (Latency: 5.136 seconds)
+2026-06-08 15:48:51,233 - ecommerce_ai - [ERROR] - Failed to cache retrieved products in MongoDB: 'NoneType' object has no attribute 'cached_products'
+2026-06-08 15:48:51,235 - ecommerce_ai - [INFO] - PRODUCT DISCOVERY PIPELINE EXECUTION COMPLETE (Total Latency: 5.141 seconds | Source: SerpAPI Google Shopping | Products Returned: 4)
+2026-06-08 15:48:51,236 - ecommerce_ai - [INFO] - product_search: Successfully discovered and parsed 4 products.
+2026-06-08 15:48:51,241 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-06-08 15:48:54,946 - ecommerce_ai - [INFO] - [TELEMETRY] 8. Gemini Reasoning Time (LangGraph): 3.7043s
+2026-06-08 15:48:54,947 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-06-08 15:48:54,956 - ecommerce_ai - [INFO] - [TELEMETRY] 9. Response Serialization Time: 0.0000s
+2026-06-08 15:48:54,958 - ecommerce_ai - [INFO] - [TELEMETRY] 10. Total Latency (LangGraph): 11.2025s
+2026-06-08 15:49:27,548 - ecommerce_ai - [INFO] - [TELEMETRY] 1. Request Received
+2026-06-08 15:49:27,549 - ecommerce_ai - [INFO] - [TELEMETRY] 3. Fast-Path Detection Time: 0.0000s | Result: False
+2026-06-08 15:49:27,549 - ecommerce_ai - [INFO] - Executing Tier 2/3 LangGraph Pipeline
+2026-06-08 15:49:27,550 - ecommerce_ai - [INFO] - [TELEMETRY] 2. Memory Retrieval Time (and app compilation): 0.0000s
+2026-06-08 15:49:27,550 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-06-08 15:49:27,551 - ecommerce_ai - [INFO] - [TELEMETRY] 4. LangGraph Startup Time: 0.0010s
+2026-06-08 15:49:27,558 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-06-08 15:49:33,833 - ecommerce_ai - [INFO] - [TELEMETRY] 5. Agent Routing Time: 6.2739s | Decided to call tools: ['product_search', 'product_search']
+2026-06-08 15:49:33,833 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search', 'product_search']. Routing to ToolNode.
+2026-06-08 15:49:33,840 - ecommerce_ai - [INFO] - Executing search concierge: product_search 'silver jewelry set for red dress square neckline'
+2026-06-08 15:49:33,840 - ecommerce_ai - [ERROR] - Error checking query cache: 'NoneType' object has no attribute 'query_cache'
+2026-06-08 15:49:33,840 - ecommerce_ai - [INFO] - Executing real-time SerpAPI Google Shopping discovery query...
+2026-06-08 15:49:33,841 - ecommerce_ai - [INFO] - SerpAPI request: Initiating HTTP GET to Google Shopping...
+2026-06-08 15:49:34,327 - ecommerce_ai - [INFO] - Executing search concierge: product_search 'elegant silver women's watch for formal dress'
+2026-06-08 15:49:34,327 - ecommerce_ai - [ERROR] - Error checking query cache: 'NoneType' object has no attribute 'query_cache'
+2026-06-08 15:49:34,328 - ecommerce_ai - [INFO] - Executing real-time SerpAPI Google Shopping discovery query...
+2026-06-08 15:49:34,328 - ecommerce_ai - [INFO] - SerpAPI request: Initiating HTTP GET to Google Shopping...
+2026-06-08 15:49:36,595 - ecommerce_ai - [INFO] - SerpAPI request completed in 2.265s. Discovered 40 products.
+2026-06-08 15:49:36,596 - ecommerce_ai - [INFO] - SERPAPI CALL SUCCESSFUL (Latency: 2.269 seconds)
+2026-06-08 15:49:36,597 - ecommerce_ai - [ERROR] - Failed to cache retrieved products in MongoDB: 'NoneType' object has no attribute 'cached_products'
+2026-06-08 15:49:36,597 - ecommerce_ai - [INFO] - PRODUCT DISCOVERY PIPELINE EXECUTION COMPLETE (Total Latency: 2.271 seconds | Source: SerpAPI Google Shopping | Products Returned: 4)
+2026-06-08 15:49:36,598 - ecommerce_ai - [INFO] - product_search: Successfully discovered and parsed 4 products.
+2026-06-08 15:49:38,771 - ecommerce_ai - [INFO] - SerpAPI request completed in 4.928s. Discovered 40 products.
+2026-06-08 15:49:38,773 - ecommerce_ai - [INFO] - SERPAPI CALL SUCCESSFUL (Latency: 4.932 seconds)
+2026-06-08 15:49:38,774 - ecommerce_ai - [ERROR] - Failed to cache retrieved products in MongoDB: 'NoneType' object has no attribute 'cached_products'
+2026-06-08 15:49:38,774 - ecommerce_ai - [INFO] - PRODUCT DISCOVERY PIPELINE EXECUTION COMPLETE (Total Latency: 4.934 seconds | Source: SerpAPI Google Shopping | Products Returned: 4)
+2026-06-08 15:49:38,774 - ecommerce_ai - [INFO] - product_search: Successfully discovered and parsed 4 products.
+2026-06-08 15:49:38,779 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-06-08 15:49:42,741 - ecommerce_ai - [INFO] - [TELEMETRY] 8. Gemini Reasoning Time (LangGraph): 3.9619s
+2026-06-08 15:49:42,742 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-06-08 15:49:42,748 - ecommerce_ai - [INFO] - [TELEMETRY] 9. Response Serialization Time: 0.0000s
+2026-06-08 15:49:42,748 - ecommerce_ai - [INFO] - [TELEMETRY] 10. Total Latency (LangGraph): 15.2004s
+2026-06-08 16:03:36,932 - ecommerce_ai - [INFO] - [TELEMETRY] 1. Request Received
+2026-06-08 16:03:36,933 - ecommerce_ai - [INFO] - [TELEMETRY] 3. Fast-Path Detection Time: 0.0000s | Result: False
+2026-06-08 16:03:36,935 - ecommerce_ai - [INFO] - Executing Tier 2/3 LangGraph Pipeline
+2026-06-08 16:03:36,935 - ecommerce_ai - [INFO] - [TELEMETRY] 2. Memory Retrieval Time (and app compilation): 0.0000s
+2026-06-08 16:03:36,936 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-06-08 16:03:36,936 - ecommerce_ai - [INFO] - [TELEMETRY] 4. LangGraph Startup Time: 0.0000s
+2026-06-08 16:03:36,955 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-06-08 16:03:38,421 - ecommerce_ai - [INFO] - [TELEMETRY] 5. Agent Routing Time: 1.4660s | Decided to call tools: ['product_search']
+2026-06-08 16:03:38,422 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search']. Routing to ToolNode.
+2026-06-08 16:03:38,432 - ecommerce_ai - [INFO] - Executing search concierge: product_search 'women's elegant cardigans for office trip professional layering'
+2026-06-08 16:03:38,438 - ecommerce_ai - [ERROR] - Error checking query cache: 'NoneType' object has no attribute 'query_cache'
+2026-06-08 16:03:38,439 - ecommerce_ai - [INFO] - Executing real-time SerpAPI Google Shopping discovery query...
+2026-06-08 16:03:38,442 - ecommerce_ai - [INFO] - SerpAPI request: Initiating HTTP GET to Google Shopping...
+2026-06-08 16:03:41,868 - ecommerce_ai - [INFO] - SerpAPI request completed in 3.389s. Discovered 40 products.
+2026-06-08 16:03:41,871 - ecommerce_ai - [INFO] - SERPAPI CALL SUCCESSFUL (Latency: 3.429 seconds)
+2026-06-08 16:03:41,873 - ecommerce_ai - [ERROR] - Failed to cache retrieved products in MongoDB: 'NoneType' object has no attribute 'cached_products'
+2026-06-08 16:03:41,876 - ecommerce_ai - [INFO] - PRODUCT DISCOVERY PIPELINE EXECUTION COMPLETE (Total Latency: 3.438 seconds | Source: SerpAPI Google Shopping | Products Returned: 4)
+2026-06-08 16:03:41,881 - ecommerce_ai - [INFO] - product_search: Successfully discovered and parsed 4 products.
+2026-06-08 16:03:41,888 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-06-08 16:03:45,089 - ecommerce_ai - [INFO] - [TELEMETRY] 8. Gemini Reasoning Time (LangGraph): 3.1970s
+2026-06-08 16:03:45,091 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-06-08 16:03:45,100 - ecommerce_ai - [INFO] - [TELEMETRY] 9. Response Serialization Time: 0.0010s
+2026-06-08 16:03:45,103 - ecommerce_ai - [INFO] - [TELEMETRY] 10. Total Latency (LangGraph): 8.1711s
+2026-06-22 18:59:18,430 - ecommerce_ai - [INFO] - [TELEMETRY] 1. Request Received
+2026-06-22 18:59:18,432 - ecommerce_ai - [INFO] - [TELEMETRY] 3. Fast-Path Detection Time: 0.0015s | Result: True
+2026-06-22 18:59:18,433 - ecommerce_ai - [INFO] - Executing Tier 1 Fast-Path Pipeline
+2026-06-22 18:59:18,459 - ecommerce_ai - [INFO] - Executing search concierge: product_search 'Best headphones for productivity'
+2026-06-22 18:59:18,459 - ecommerce_ai - [ERROR] - Error checking query cache: 'NoneType' object has no attribute 'query_cache'
+2026-06-22 18:59:18,460 - ecommerce_ai - [INFO] - Executing real-time SerpAPI Google Shopping discovery query...
+2026-06-22 18:59:18,462 - ecommerce_ai - [INFO] - SerpAPI request: Initiating HTTP GET to Google Shopping...
+2026-06-22 18:59:29,209 - ecommerce_ai - [INFO] - SerpAPI request completed in 10.740s. Discovered 40 products.
+2026-06-22 18:59:29,211 - ecommerce_ai - [INFO] - SERPAPI CALL SUCCESSFUL (Latency: 10.749 seconds)
+2026-06-22 18:59:29,215 - ecommerce_ai - [ERROR] - Failed to cache retrieved products in MongoDB: 'NoneType' object has no attribute 'cached_products'
+2026-06-22 18:59:29,216 - ecommerce_ai - [INFO] - PRODUCT DISCOVERY PIPELINE EXECUTION COMPLETE (Total Latency: 10.757 seconds | Source: SerpAPI Google Shopping | Products Returned: 4)
+2026-06-22 18:59:29,217 - ecommerce_ai - [INFO] - product_search: Successfully discovered and parsed 4 products.
+2026-06-22 18:59:29,218 - ecommerce_ai - [INFO] - [TELEMETRY] 6. Tool Execution Time (includes SerpAPI): 10.7778s
+2026-06-22 18:59:30,776 - ecommerce_ai - [INFO] - [TELEMETRY] 8. Gemini Reasoning Time (Fast-Path): 1.5518s
+2026-06-22 18:59:30,776 - ecommerce_ai - [INFO] - [TELEMETRY] 9. Response Serialization Time: 0.0000s
+2026-06-22 18:59:30,777 - ecommerce_ai - [INFO] - [TELEMETRY] 10. Total Latency (Fast-Path): 12.3476s
+2026-06-22 18:59:57,547 - ecommerce_ai - [INFO] - [TELEMETRY] 1. Request Received
+2026-06-22 18:59:57,550 - ecommerce_ai - [INFO] - [TELEMETRY] 3. Fast-Path Detection Time: 0.0000s | Result: False
+2026-06-22 18:59:57,550 - ecommerce_ai - [INFO] - Executing Tier 2/3 LangGraph Pipeline
+2026-06-22 18:59:57,641 - ecommerce_ai - [INFO] - LangGraph workflow compiled with MongoDB checkpointer.
+2026-06-22 18:59:57,646 - ecommerce_ai - [INFO] - [TELEMETRY] 2. Memory Retrieval Time (and app compilation): 0.0944s
+2026-06-22 18:59:57,646 - ecommerce_ai - [INFO] - Invoking LangGraph multi-agent workflow...
+2026-06-22 18:59:57,647 - ecommerce_ai - [INFO] - [TELEMETRY] 4. LangGraph Startup Time: 0.0010s
+2026-06-22 18:59:57,657 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-06-22 18:59:58,550 - ecommerce_ai - [INFO] - [TELEMETRY] 5. Agent Routing Time: 0.8927s | Decided to call tools: ['product_search']
+2026-06-22 18:59:58,554 - ecommerce_ai - [INFO] - Agent decided to call tools: ['product_search']. Routing to ToolNode.
+2026-06-22 18:59:58,590 - ecommerce_ai - [INFO] - Executing search concierge: product_search 'best gaming laptops 2024 high performance'
+2026-06-22 18:59:58,598 - ecommerce_ai - [ERROR] - Error checking query cache: 'NoneType' object has no attribute 'query_cache'
+2026-06-22 18:59:58,604 - ecommerce_ai - [INFO] - Executing real-time SerpAPI Google Shopping discovery query...
+2026-06-22 18:59:58,610 - ecommerce_ai - [INFO] - SerpAPI request: Initiating HTTP GET to Google Shopping...
+2026-06-22 19:00:02,457 - ecommerce_ai - [INFO] - SerpAPI request completed in 3.835s. Discovered 40 products.
+2026-06-22 19:00:02,460 - ecommerce_ai - [INFO] - SERPAPI CALL SUCCESSFUL (Latency: 3.850 seconds)
+2026-06-22 19:00:02,466 - ecommerce_ai - [ERROR] - Failed to cache retrieved products in MongoDB: 'NoneType' object has no attribute 'cached_products'
+2026-06-22 19:00:02,470 - ecommerce_ai - [INFO] - PRODUCT DISCOVERY PIPELINE EXECUTION COMPLETE (Total Latency: 3.872 seconds | Source: SerpAPI Google Shopping | Products Returned: 4)
+2026-06-22 19:00:02,479 - ecommerce_ai - [INFO] - product_search: Successfully discovered and parsed 4 products.
+2026-06-22 19:00:02,489 - ecommerce_ai - [INFO] - Agent: Analyzing conversation state and determining next action...
+2026-06-22 19:00:05,446 - ecommerce_ai - [INFO] - [TELEMETRY] 8. Gemini Reasoning Time (LangGraph): 2.9541s
+2026-06-22 19:00:05,452 - ecommerce_ai - [INFO] - Agent formulated final response. Routing to END.
+2026-06-22 19:00:05,465 - ecommerce_ai - [INFO] - [TELEMETRY] 9. Response Serialization Time: 0.0020s
+2026-06-22 19:00:05,468 - ecommerce_ai - [INFO] - [TELEMETRY] 10. Total Latency (LangGraph): 7.9207s
