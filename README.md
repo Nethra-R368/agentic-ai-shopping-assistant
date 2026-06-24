@@ -376,24 +376,5 @@ npm run dev
 
 ---
 
-# 👩‍💻 Author
 
-**Nethra R**
 
-B.Tech CSE (AI)  
-Amrita Vishwa Vidyapeetham
-
----
-
-## ⭐ Project Highlights
-
-✅ Agentic AI Architecture  
-✅ LangGraph Workflow  
-✅ Gemini Vision Integration  
-✅ Voice Input & Output  
-✅ Real-Time Product Retrieval  
-✅ MongoDB Caching  
-✅ FastAPI Backend  
-✅ React Frontend  
-✅ SerpAPI Integration  
-✅ Multimodal Shopping Experience
