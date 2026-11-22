@@ -90,12 +90,18 @@ await smoothScroll(500); await pause(2500);
 
 // 5. Add to compare + compare page
 scene('Add finalists to Compare');
+// Use the phones from the latest answer (iPhone 15 vs Galaxy S24), not the laptops above.
 const cmp = page.getByRole('button', { name: 'Add to compare' });
-await click(cmp.nth(0)); await pause(700);
-await click(cmp.nth(1)); await pause(900);
+const n = await cmp.count();
+const last = Math.max(0, n - 6);
+// Click the higher index first: an added card's button relabels, which shifts later indexes.
+await click(cmp.nth(last + 1)); await pause(700);
+await click(cmp.nth(last)); await pause(900);
 await click(page.getByRole('link', { name: /^Compare/ }).first());
 await page.waitForSelector('text=Verdict', { timeout: 60000 });
-await page.waitForFunction(() => !document.querySelector('.skeleton'), null, { timeout: 120000 });
+// Wait until the AI verdict text has actually rendered (skeleton gone, prose present).
+await page.waitForFunction(() => document.querySelector('.prose') && !document.querySelector('.skeleton'), null, { timeout: 120000 });
+await pause(600);
 scene('Compare page: verdict + spec table with winners');
 await pause(3500);
 await smoothScroll(600); await pause(3000);

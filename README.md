@@ -1,5 +1,11 @@
 # AuraBuy: AI Shopping Concierge
 
+**Live:** https://agentic-ai-shopping-assistant.vercel.app
+
+![AuraBuy home](submission/screenshots/01-home-light.png)
+
+![Agent comparing iPhone 15 and Galaxy S24](submission/screenshots/07-agent-compare.png)
+
 AuraBuy is a full-stack web app that helps shoppers in India decide what to buy. You describe what you need by **text, voice or photo**. AuraBuy searches stores, ranks the options and explains which one to buy and why. It also lets you compare finalists side by side, save them to a wishlist, and set price-drop alerts.
 
 **Stack:** React 19 · Vite · Tailwind CSS 4 · FastAPI · LangGraph · Google Gemini · SerpAPI (Google Shopping) · MongoDB · JWT auth
