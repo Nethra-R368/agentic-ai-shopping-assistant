@@ -73,6 +73,9 @@ def rule_based_insights(products: list[Product]) -> list[Product]:
 
 
 def rule_based_summary(query: str, products: list[Product], provider: str) -> str:
+    if not products and provider == "unavailable":
+        return ("The AI service is very busy right now and couldn't finish that search. "
+                "Please try again in a few seconds.")
     if not products:
         return ("I couldn't find good matches for that. Try naming the product type, "
                 "a brand, or a budget — e.g. *\"wireless earbuds under ₹3,000\"*.")

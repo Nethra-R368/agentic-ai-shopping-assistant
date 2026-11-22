@@ -153,6 +153,18 @@ def test_agent_empty_reply_never_reaches_user_blank(client, monkeypatch):
     assert "rephrase" in r.json()["text"]
 
 
+def test_ai_outage_never_shows_demo_catalog(client, monkeypatch):
+    """With AI configured but Gemini overloaded, say so — don't mix in sample-catalog products."""
+    monkeypatch.setattr(settings, "GEMINI_API_KEY", "fake-key-for-test")
+
+    async def overloaded(*args, **kwargs):
+        raise RuntimeError("503 UNAVAILABLE: model is experiencing high demand")
+
+    monkeypatch.setattr(search, "_from_gemini", overloaded)
+    r = client.post("/api/chat", json={"message": "laptop under 50000", "session_id": str(uuid.uuid4())}).json()
+    assert r["products"] == [] and "busy" in r["text"]
+
+
 def test_conversations_are_private(client):
     h1, h2 = register(client), register(client)
     sid = str(uuid.uuid4())
