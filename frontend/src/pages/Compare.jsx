@@ -100,7 +100,7 @@ export default function Compare() {
                   <div className={`card relative overflow-hidden text-left ${winner === i ? 'border-ink' : ''}`}>
                     {winner === i && <span className="absolute left-2 top-2 z-10 rounded-sm bg-primary px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-on-primary">Winner</span>}
                     <button onClick={() => toggleCompare(p)} className="btn-icon absolute right-1 top-1 z-10 h-8 w-8 bg-surface/80" aria-label={`Remove ${p.name}`}><X className="h-4 w-4" /></button>
-                    <button onClick={() => openProduct(p)} className="block w-full cursor-pointer"><ProductImage product={p} className="aspect-[4/3] w-full" /></button>
+                    <button onClick={() => openProduct(p)} className="block w-full cursor-pointer"><ProductImage product={p} className="h-44 w-full" /></button>
                     <div className="space-y-2 p-3">
                       <div className="line-clamp-2 font-semibold">{p.name}</div>
                       <div className="font-mono text-lg">{inr(p.price)}</div>
