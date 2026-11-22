@@ -1,21 +1,24 @@
 services:
   - type: web
-    name: ecommerce-ai-backend
-    env: python
+    name: aurabuy-api
+    runtime: python
     plan: free
     rootDir: backend
     buildCommand: pip install -r requirements.txt
-    startCommand: bash scripts/start.sh
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
     envVars:
       - key: PYTHON_VERSION
-        value: 3.11.0
+        value: 3.11.9
+      - key: ENVIRONMENT
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
       - key: GEMINI_API_KEY
         sync: false
       - key: SERPAPI_API_KEY
         sync: false
       - key: MONGO_URI
         sync: false
-      - key: ENVIRONMENT
-        value: production
       - key: CORS_ORIGINS
-        sync: false # Set this to your frontend Vercel URL
+        sync: false # your Vercel URL, e.g. https://aurabuy.vercel.app

@@ -1,215 +1,261 @@
-import time
-import re
+"""Chat endpoints.
+
+Two routes per message:
+  - "search": fast path. Search stores -> AI insights + summary (one LLM call).
+  - "agent":  LangGraph tool-calling agent for comparisons, follow-ups, images and open questions.
+
+/api/chat/stream sends Server-Sent Events:
+  status   {"text"}                  progress the user can see (real steps, not fake)
+  products {"products", "provider"}  product cards (sent again once insights are ready)
+  token    {"text"}                  answer text (streamed token-by-token on the agent route)
+  done     {"route", "provider", "session_id"}
+  error    {"detail"}
+"""
 import json
-from fastapi import APIRouter, HTTPException
-from models.schemas import ChatRequest, ChatResponse, ProductSchema
-from langchain_core.messages import HumanMessage, ToolMessage
-from agents.graph import workflow
-from database.memory import memory_manager
-from core.logger import logger
-from tools.product_search import product_search
+import re
+import time
+from typing import AsyncIterator, Optional
+
+from fastapi import APIRouter, Depends, HTTPException
+from fastapi.responses import StreamingResponse
+from langchain_core.messages import AIMessage, HumanMessage
+
+from api.deps import chat_limiter, get_current_user, get_optional_user
 from core.config import settings
-from langchain_google_genai import ChatGoogleGenerativeAI
+from core.logger import logger
+from database.mongodb import get_database
+from models.schemas import ChatRequest, ChatResponse, Product
+from services import insights
+from services.llm import text_of
+from services.search import clean_query, search_products
+from tools.product_search import extract_products
 
 router = APIRouter()
+conversations_router = APIRouter()
 
-# We cache the compiled app so we don't compile it on every request
-_compiled_app = None
-
-# Fast-path summarization LLM
-fast_llm = ChatGoogleGenerativeAI(
-    model="gemini-3.1-flash-lite", 
-    temperature=0.2,
-    google_api_key=settings.GEMINI_API_KEY
+AGENT_RE = re.compile(
+    r"\b(compare|vs\.?|versus|difference|better|which (one|is)|should i|worth|alternative|review|explain|why|how (do|does|to|is|much)|what (is|are|about)|pros|cons)\b",
+    re.I,
 )
+FOLLOWUP_RE = re.compile(
+    r"\b(it|this|that|these|those|them|one|cheaper|pricier|first|second|third|last|other|instead|above)\b", re.I
+)
+SMALLTALK_RE = re.compile(r"^\s*(hi|hey|hello|yo|thanks|thank you|ok|okay|cool|good (morning|evening))\W*$", re.I)
 
-def get_compiled_app():
-    global _compiled_app
-    if _compiled_app is None:
-        checkpointer = memory_manager.checkpointer
-        if checkpointer:
-            _compiled_app = workflow.compile(checkpointer=checkpointer)
-            logger.info("LangGraph workflow compiled with MongoDB checkpointer.")
+
+def choose_route(message: str, has_image: bool, has_history: bool) -> str:
+    if SMALLTALK_RE.match(message):
+        return "agent" if settings.has_gemini else "smalltalk"
+    if not settings.has_gemini:
+        return "no_ai_image" if has_image else "search"
+    if has_image or AGENT_RE.search(message):
+        return "agent"
+    if has_history and FOLLOWUP_RE.search(message) and len(message.split()) <= 14:
+        return "agent"
+    return "search"
+
+
+def sse(event: str, data: dict) -> str:
+    return f"event: {event}\ndata: {json.dumps(data, ensure_ascii=False, default=str)}\n\n"
+
+
+def _history_messages(turns: list[dict]) -> list:
+    msgs = []
+    for t in turns[-8:]:
+        if t["role"] == "user":
+            msgs.append(HumanMessage(content=t["content"]))
         else:
-            _compiled_app = workflow.compile()
-            logger.warning("LangGraph workflow compiled WITHOUT checkpointer (Memory disabled).")
-    return _compiled_app
+            content = t["content"]
+            if t.get("products"):
+                shown = "; ".join(f"{p['name']} — ₹{p['price']:,.0f} — {p.get('seller')} — rating {p.get('rating')}"
+                                  for p in t["products"][:6])
+                content += f"\n[Products shown to the user: {shown}]"
+            msgs.append(AIMessage(content=content))
+    return msgs
 
-def is_fast_path(query: str) -> bool:
-    # Exclude complex comparisons from fast path
-    exclusion_pattern = r"(?i)\b(compare|vs|cheapest|best value|alternative|better than)\b"
-    if re.search(exclusion_pattern, query):
-        return False
 
-    # Tier 1 Regex: matches simple queries like "best laptop under 50000" or "find a phone"
-    pattern = r"(?i)\b(best|cheap|affordable|top|find|recommend|suggest)\s+([a-zA-Z\s]+)\s*(under|below|less than|for)?\s*[\$₹]?\s*(\d+(?:,\d+)*)?"
-    return bool(re.search(pattern, query))
+def _history_text(turns: list[dict]) -> str:
+    return "\n".join(f"{t['role']}: {t['content'][:300]}" for t in turns[-4:])
+
+
+async def _load_conversation(session_id: str, user: Optional[dict]) -> dict:
+    db = get_database()
+    convo = await db.conversations.find_one({"_id": session_id})
+    if convo and convo.get("user_id") and (not user or convo["user_id"] != user["_id"]):
+        raise HTTPException(status_code=403, detail="This conversation belongs to another account.")
+    if not convo:
+        convo = {"_id": session_id, "messages": [], "created_at": time.time(), "title": None}
+    if user and not convo.get("user_id"):
+        convo["user_id"] = user["_id"]
+    return convo
+
+
+async def _save_turn(convo: dict, user_text: str, had_image: bool, answer: str, products: list[Product], route: str):
+    now = time.time()
+    convo["messages"].append({"role": "user", "content": user_text, "image": had_image, "ts": now})
+    convo["messages"].append({"role": "assistant", "content": answer, "route": route, "ts": now,
+                              "products": [p.model_dump() for p in products]})
+    convo["messages"] = convo["messages"][-60:]
+    convo["updated_at"] = now
+    convo["title"] = convo.get("title") or (user_text[:60] or "Image search")
+    await get_database().conversations.replace_one({"_id": convo["_id"]}, convo, upsert=True)
+
+
+async def run_chat(req: ChatRequest, user: Optional[dict]) -> AsyncIterator[str]:
+    t0 = time.time()
+    if req.image:
+        if not req.image.startswith("data:image/"):
+            yield sse("error", {"detail": "Unsupported image format."})
+            return
+        if len(req.image) * 0.75 > settings.MAX_IMAGE_BYTES:
+            yield sse("error", {"detail": "Image is too large (max 5 MB)."})
+            return
+
+    convo = await _load_conversation(req.session_id, user)
+    history = convo["messages"]
+    route = choose_route(req.message, bool(req.image), bool(history))
+    logger.info(f"chat route={route} session={req.session_id[:8]} msg={req.message[:60]!r}")
+
+    answer, products, provider = "", [], None
+
+    if route == "smalltalk":
+        answer = ("Hi! I'm AuraBuy. Tell me what you're shopping for — e.g. *\"running shoes under ₹4,000\"* — "
+                  "and I'll find, rank and explain the best options.")
+        yield sse("token", {"text": answer})
+
+    elif route == "no_ai_image":
+        answer = ("Image search needs the Gemini API key on the server (`GEMINI_API_KEY`). "
+                  "Meanwhile, describe the item in words and I'll search for it.")
+        yield sse("token", {"text": answer})
+
+    elif route == "search":
+        yield sse("status", {"text": f"Searching stores for “{clean_query(req.message)}”"})
+        found, provider = await search_products(req.message, limit=6)
+        found = insights.rule_based_insights(found)
+        if found:
+            yield sse("products", {"products": [p.model_dump() for p in found], "provider": provider})
+            yield sse("status", {"text": f"Analysing {len(found)} options"})
+        answer, products = await insights.enrich(req.message, found, provider, _history_text(history))
+        if products:
+            yield sse("products", {"products": [p.model_dump() for p in products], "provider": provider})
+        yield sse("token", {"text": answer})
+
+    else:  # agent
+        from agents.graph import agent_app
+
+        if req.image:
+            user_msg = HumanMessage(content=[{"type": "text", "text": req.message},
+                                             {"type": "image_url", "image_url": {"url": req.image}}])
+            yield sse("status", {"text": "Looking at your image"})
+        else:
+            user_msg = HumanMessage(content=req.message)
+            yield sse("status", {"text": "Thinking"})
+
+        seen: dict[str, Product] = {}
+        chunks: list[str] = []
+        last_step = None
+        try:
+            async for ev in agent_app.astream_events({"messages": _history_messages(history) + [user_msg]},
+                                                     version="v2", config={"recursion_limit": 12}):
+                kind = ev["event"]
+                if kind == "on_tool_start":
+                    q = (ev["data"].get("input") or {}).get("query", "")
+                    yield sse("status", {"text": f"Searching stores for “{q}”"})
+                elif kind == "on_tool_end":
+                    out = ev["data"].get("output")
+                    raw = text_of(getattr(out, "content", out))
+                    for item in extract_products(raw):
+                        p = Product(**item)
+                        seen.setdefault(p.id, p)
+                        provider = p.provider
+                    if seen:
+                        yield sse("products", {"products": [p.model_dump() for p in list(seen.values())[:8]],
+                                               "provider": provider})
+                        yield sse("status", {"text": "Writing recommendation"})
+                elif kind == "on_chat_model_stream":
+                    meta = ev.get("metadata", {})
+                    # Only the agent node's text is the answer; LLM calls inside tools are internal.
+                    if meta.get("langgraph_node") != "agent":
+                        continue
+                    piece = text_of(getattr(ev["data"].get("chunk"), "content", ""))
+                    if piece:
+                        step = meta.get("langgraph_step")
+                        if chunks and step != last_step:
+                            piece = "\n\n" + piece
+                        last_step = step
+                        chunks.append(piece)
+                        yield sse("token", {"text": piece})
+        except Exception as e:
+            logger.error(f"agent failed: {e}", exc_info=True)
+            if not chunks:
+                msg = "Sorry — something went wrong while I was researching that. Please try again."
+                chunks.append(msg)
+                yield sse("token", {"text": msg})
+        answer = "".join(chunks).strip() or "I couldn't come up with an answer for that — try rephrasing?"
+        products = insights.rule_based_insights(list(seen.values())[:8])
+        if products:
+            yield sse("products", {"products": [p.model_dump() for p in products], "provider": provider})
+
+    try:
+        await _save_turn(convo, req.message, bool(req.image), answer, products, route)
+    except Exception as e:
+        logger.warning(f"could not save conversation: {e}")
+    logger.info(f"chat done route={route} provider={provider} products={len(products)} in {time.time() - t0:.2f}s")
+    yield sse("done", {"route": route, "provider": provider, "session_id": req.session_id})
+
+
+@router.post("/stream")
+async def chat_stream(req: ChatRequest, user: Optional[dict] = Depends(get_optional_user), _=Depends(chat_limiter)):
+    async def guarded():
+        try:
+            async for chunk in run_chat(req, user):
+                yield chunk
+        except HTTPException as e:
+            yield sse("error", {"detail": e.detail})
+        except Exception as e:
+            logger.error(f"chat stream failed: {e}", exc_info=True)
+            yield sse("error", {"detail": "Something went wrong. Please try again."})
+
+    return StreamingResponse(guarded(), media_type="text/event-stream",
+                             headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
+
 
 @router.post("", response_model=ChatResponse)
-async def chat_with_assistant(request: ChatRequest):
-    try:
-        t_start = time.time()
-        logger.info("[TELEMETRY] 1. Request Received")
-        
-        session_id = request.session_id
-        
-        # FAST-PATH DETECTION
-        t_detect_start = time.time()
-        
-        has_image = bool(request.image)
-        if has_image:
-            image_size_kb = len(request.image) * 0.75 / 1024
-            logger.info(f"[TELEMETRY] Multimodal Image Received | Size: {image_size_kb:.2f} KB")
-        
-        use_fast_path = is_fast_path(request.message) and not has_image
-        t_detect = time.time() - t_detect_start
-        
-        if has_image and is_fast_path(request.message):
-            logger.info("[TELEMETRY] Fast-Path Skipped: True (Multimodal Image detected)")
-            
-        logger.info(f"[TELEMETRY] 3. Fast-Path Detection Time: {t_detect:.4f}s | Result: {use_fast_path}")
-        
-        if use_fast_path:
-            logger.info("Executing Tier 1 Fast-Path Pipeline")
-            
-            # TOOL EXECUTION
-            t_tool_start = time.time()
-            tool_output_str = await product_search.ainvoke({"query": request.message})
-            t_tool = time.time() - t_tool_start
-            logger.info(f"[TELEMETRY] 6. Tool Execution Time (includes SerpAPI): {t_tool:.4f}s")
-            
-            extracted_products = []
-            json_text = "[]"
-            if "PRODUCTS_JSON_START" in tool_output_str:
-                start_idx = tool_output_str.find("PRODUCTS_JSON_START") + len("PRODUCTS_JSON_START")
-                end_idx = tool_output_str.find("PRODUCTS_JSON_END")
-                json_text = tool_output_str[start_idx:end_idx].strip()
-                try:
-                    products_list = json.loads(json_text)
-                    for item in products_list:
-                        product_obj = ProductSchema(
-                            name=item.get("name"),
-                            brand=item.get("brand"),
-                            category=item.get("category"),
-                            description=item.get("description", ""),
-                            price=float(item.get("price", 0)),
-                            rating=float(item.get("rating", 0)),
-                            image_url=item.get("image_url"),
-                            specifications=item.get("specifications", {}),
-                            product_url=item.get("product_url"),
-                            source=item.get("source"),
-                            seller=item.get("seller")
-                        )
-                        extracted_products.append(product_obj)
-                except Exception as ex:
-                    logger.error(f"Failed to parse fast-path JSON: {ex}")
-            
-            # GEMINI REASONING
-            t_llm_start = time.time()
-            prompt = f"The user asked: '{request.message}'. Here are the best products found:\n{json_text}\nWrite a short, engaging 2-sentence summary introducing these products. Do not list them individually, just write a conversational introduction."
-            response = await fast_llm.ainvoke([HumanMessage(content=prompt)])
-            response_text = ""
-            if isinstance(response.content, list):
-                for block in response.content:
-                    if isinstance(block, dict) and block.get("type") == "text":
-                        response_text += block.get("text", "")
-                    elif isinstance(block, str):
-                        response_text += block
-            else:
-                response_text = str(response.content)
-            t_llm = time.time() - t_llm_start
-            logger.info(f"[TELEMETRY] 8. Gemini Reasoning Time (Fast-Path): {t_llm:.4f}s")
-            
-            # RESPONSE SERIALIZATION
-            t_serialize_start = time.time()
-            chat_response = ChatResponse(sender="bot", text=response_text, products=extracted_products)
-            t_serialize = time.time() - t_serialize_start
-            logger.info(f"[TELEMETRY] 9. Response Serialization Time: {t_serialize:.4f}s")
-            
-            t_total = time.time() - t_start
-            logger.info(f"[TELEMETRY] 10. Total Latency (Fast-Path): {t_total:.4f}s")
-            return chat_response
+async def chat(req: ChatRequest, user: Optional[dict] = Depends(get_optional_user), _=Depends(chat_limiter)):
+    """Non-streaming variant (same pipeline), handy for scripts and tests."""
+    text, products, route, provider = [], [], "search", None
+    async for raw in run_chat(req, user):
+        event, data = raw.split("\n", 1)
+        event = event.removeprefix("event: ")
+        payload = json.loads(data.removeprefix("data: ").strip())
+        if event == "token":
+            text.append(payload["text"])
+        elif event == "products":
+            products = payload["products"]
+        elif event == "error":
+            raise HTTPException(status_code=400, detail=payload["detail"])
+        elif event == "done":
+            route, provider = payload["route"], payload["provider"]
+    return ChatResponse(text="".join(text), products=products, route=route, provider=provider)
 
-        # LANGGRAPH TIER 2/3 PATH
-        logger.info("Executing Tier 2/3 LangGraph Pipeline")
-        
-        if has_image:
-            logger.info("[TELEMETRY] Route Selected: Multimodal Vision Pipeline")
-            logger.info("[TELEMETRY] Gemini Vision Invoked: True")
-        
-        t_memory_start = time.time()
-        app = get_compiled_app()
-        t_memory = time.time() - t_memory_start
-        logger.info(f"[TELEMETRY] 2. Memory Retrieval Time (and app compilation): {t_memory:.4f}s")
-        
-        t_lg_start = time.time()
-        
-        if has_image:
-            # Langchain handles data:image/... URIs natively if passed correctly
-            user_msg = HumanMessage(content=[
-                {"type": "text", "text": request.message},
-                {"type": "image_url", "image_url": {"url": request.image}}
-            ])
-        else:
-            user_msg = HumanMessage(content=request.message)
-        logger.info("Invoking LangGraph multi-agent workflow...")
-        t_lg = time.time() - t_lg_start
-        logger.info(f"[TELEMETRY] 4. LangGraph Startup Time: {t_lg:.4f}s")
-        
-        final_state = await app.ainvoke(
-            {"messages": [user_msg]},
-            config={"configurable": {"thread_id": session_id}} 
-        )
-        
-        t_serialize_start = time.time()
-        ai_response = final_state["messages"][-1]
-        response_text = ""
-        if isinstance(ai_response.content, list):
-            for block in ai_response.content:
-                if isinstance(block, dict) and block.get("type") == "text":
-                    response_text += block.get("text", "")
-                elif isinstance(block, str):
-                    response_text += block
-        else:
-            response_text = str(ai_response.content)
 
-        extracted_products = []
-        for msg in reversed(final_state["messages"]):
-            if getattr(msg, "type", None) == "human":
-                break
-            content_str = str(msg.content)
-            if "PRODUCTS_JSON_START" in content_str and "PRODUCTS_JSON_END" in content_str:
-                try:
-                    start_idx = content_str.find("PRODUCTS_JSON_START") + len("PRODUCTS_JSON_START")
-                    end_idx = content_str.find("PRODUCTS_JSON_END")
-                    json_text = content_str[start_idx:end_idx].strip()
-                    products_list = json.loads(json_text)
-                    for item in reversed(products_list):
-                        product_obj = ProductSchema(
-                            name=item.get("name"),
-                            brand=item.get("brand"),
-                            category=item.get("category"),
-                            description=item.get("description", ""),
-                            price=float(item.get("price", 0)),
-                            rating=float(item.get("rating", 0)),
-                            image_url=item.get("image_url"),
-                            specifications=item.get("specifications", {}),
-                            product_url=item.get("product_url"),
-                            source=item.get("source"),
-                            seller=item.get("seller")
-                        )
-                        extracted_products.insert(0, product_obj)
-                except Exception as ex:
-                    logger.error(f"Failed to parse extracted product JSON: {ex}")
+# ---------------------------------------------------------------- conversations
+@conversations_router.get("")
+async def list_conversations(user: dict = Depends(get_current_user)):
+    docs = await get_database().conversations.find(
+        {"user_id": user["_id"]}, {"title": 1, "updated_at": 1}
+    ).sort("updated_at", -1).to_list(50)
+    return [{"id": d["_id"], "title": d.get("title") or "Conversation", "updated_at": d.get("updated_at")} for d in docs]
 
-        chat_response = ChatResponse(sender="bot", text=response_text, products=extracted_products)
-        t_serialize = time.time() - t_serialize_start
-        logger.info(f"[TELEMETRY] 9. Response Serialization Time: {t_serialize:.4f}s")
-        
-        t_total = time.time() - t_start
-        logger.info(f"[TELEMETRY] 10. Total Latency (LangGraph): {t_total:.4f}s")
-        return chat_response
 
-    except Exception as e:
-        logger.error(f"Error in chat endpoint: {e}", exc_info=True)
-        raise HTTPException(status_code=500, detail="An internal error occurred. Please try again later.")
+@conversations_router.get("/{session_id}")
+async def get_conversation(session_id: str, user: dict = Depends(get_current_user)):
+    d = await get_database().conversations.find_one({"_id": session_id, "user_id": user["_id"]})
+    if not d:
+        raise HTTPException(status_code=404, detail="Conversation not found.")
+    return {"id": d["_id"], "title": d.get("title"), "messages": d.get("messages", [])}
+
+
+@conversations_router.delete("/{session_id}", status_code=204)
+async def delete_conversation(session_id: str, user: dict = Depends(get_current_user)):
+    await get_database().conversations.delete_one({"_id": session_id, "user_id": user["_id"]})

@@ -1,380 +1,138 @@
-# 🛍️ AuraBuy – Multimodal AI Shopping Concierge
+# AuraBuy: AI Shopping Concierge
 
-AuraBuy is an Agentic AI-powered shopping assistant that helps users discover products using **text, voice, and image inputs**. Instead of manually browsing multiple websites, users can describe what they need and receive intelligent, real-time recommendations powered by LLMs and live web retrieval.
+AuraBuy is a full-stack web app that helps shoppers in India decide what to buy. You describe what you need by **text, voice or photo**. AuraBuy searches stores, ranks the options and explains which one to buy and why. It also lets you compare finalists side by side, save them to a wishlist, and set price-drop alerts.
 
----
-
-## 🚀 Features
-
-### 🔍 Intelligent Product Discovery
-- Search products using natural language.
-- Example:
-  - "Best editing laptop under ₹50,000"
-  - "Find a winter jacket for extreme weather"
-  - "Suggest a gift for a software engineer"
-
-### 🤖 Agentic AI Workflows
-- Powered by LangGraph and LangChain.
-- Multi-step reasoning and tool calling.
-- Product comparison and recommendation generation.
-
-### 🌐 Real-Time Internet Retrieval
-- Retrieves live product information using SerpAPI.
-- Fetches:
-  - Product names
-  - Prices
-  - Ratings
-  - Seller information
-  - Product links
-  - Images
-
-### 🎙️ Voice Input
-- Continuous Speech-to-Text using Web Speech API.
-- Hands-free shopping assistance.
-
-### 🔊 Voice Output
-- Text-to-Speech support.
-- AI responses can be read aloud.
-
-### 🖼️ Image-Based Recommendations
-- Upload images and receive contextual recommendations.
-- Powered by Gemini Vision.
-- Example:
-  - Upload a dress and ask for matching jewelry.
-  - Upload furniture and ask for matching decor.
-
-### ⚡ Fast-Path Architecture
-- Simple product searches bypass heavy agent workflows.
-- Reduced latency for common shopping queries.
-
-### 🧠 Conversation Memory
-- Session-based memory using LangGraph and MongoDB.
-- Supports contextual follow-up questions.
-
-### 💾 MongoDB Query Cache
-- Frequently searched products are cached.
-- Reduces API calls and improves response speed.
+**Stack:** React 19 · Vite · Tailwind CSS 4 · FastAPI · LangGraph · Google Gemini · SerpAPI (Google Shopping) · MongoDB · JWT auth
 
 ---
 
-# 🏗️ System Architecture
+## Features
 
-```text
-User
- ↓
-React Frontend
- ↓
-FastAPI Backend
- ↓
-Fast Path OR LangGraph Agent
- ↓
-Product Search Tool
- ↓
-MongoDB Cache
- ↓
-SerpAPI (Google Shopping)
- ↓
-Gemini Reasoning
- ↓
-Frontend Rendering
+| | |
+|---|---|
+| **Conversational search** | "Best laptop for coding under ₹70,000". The app reads your budget (`₹1 lakh`, `25k`, `under 3,499`) and filters results to fit it. |
+| **Explained picks** | Every product gets a badge (Best overall / Best value / Top rated…), a one-line "why it fits", and honest pros and cons drawn from real price, rating, review and discount data. |
+| **Agentic follow-ups** | "Compare the top 2", "anything cheaper?", "which has better battery?" go to a LangGraph tool-calling agent that keeps the conversation context. |
+| **Photo search** | Upload, paste or drag an image. Gemini Vision describes it and searches for the item or for things that match it. |
+| **Voice** | Speech-to-text input and read-aloud answers, using the Web Speech API. |
+| **Live streaming** | Answers stream over Server-Sent Events. The progress steps you see ("Searching stores for…", "Analysing 6 options") are the real pipeline steps. |
+| **Compare** | Line up 2–4 products. You get a spec table with per-row winners and an AI verdict, optionally tuned to your use case. |
+| **Wishlist** | Works as a guest (saved in the browser). When you sign in, it merges into your account. |
+| **Price alerts** | Set a target price, track the current and lowest price with a sparkline, and refresh prices on demand. |
+| **Accounts and history** | JWT auth with bcrypt-hashed passwords. Chats are saved per account, and the API returns a user's conversations only to that user. |
+| **Polish** | Light and dark themes, responsive down to phone width, keyboard and screen-reader friendly, skeleton loaders. |
+
+### Works with zero setup (graceful degradation)
+
+Every API key is optional, so the app always runs:
+
+| Keys configured | Product data | Reasoning |
+|---|---|---|
+| none (**demo mode**) | Sample catalog ([DummyJSON](https://dummyjson.com)) | Rule-based insights from real data fields |
+| `GEMINI_API_KEY` | Gemini suggests real models with estimated prices; links go to Google Shopping search | Gemini summaries, pros/cons, compare verdicts, agent and vision |
+| `+ SERPAPI_API_KEY` | **Live Google Shopping listings**: prices, images, store links, ratings | Gemini |
+| `+ MONGO_URI` | Accounts, wishlists, alerts and chats persist across restarts (otherwise an in-memory DB) | |
+
+The site shows a banner in demo mode, and marks AI-estimated prices as estimates. It never makes up links or prices and presents them as real.
+
+---
+
+## Architecture
+
+```
+React (Vite) ──SSE /api/chat/stream──▶ FastAPI
+                                        │
+                     ┌── route: "search" (simple queries) ──────────────┐
+                     │   search_products() ─▶ cache ─▶ SerpAPI ─▶ Gemini ─▶ demo
+                     │   insights.enrich()  ─▶ 1 Gemini call: summary + per-product why/pros/cons/badge
+                     │
+                     └── route: "agent" (compare / follow-ups / images / questions)
+                         LangGraph: agent ⇄ product_search tool (≤3 rounds), token-streamed
+                                        │
+                                   MongoDB: users · wishlist · alerts · conversations · query_cache
+```
+
+* **Routing** (`backend/api/chat.py`): regex heuristics send simple searches down a fast single-LLM-call path. Comparisons, follow-ups that refer to earlier results, and image queries go to the agent.
+* **Conversation memory** is stored in MongoDB and replayed into the agent each turn, including the products already shown. So "the second one" resolves correctly, and memory survives restarts.
+* **Caching:** identical searches within an hour are served from `query_cache`.
+
+### Project layout
+
+```
+backend/
+  main.py                 FastAPI app, CORS, routers, /health
+  api/                    auth · chat (+ conversations) · products (search, trending, compare) · wishlist · alerts
+  agents/                 LangGraph graph, agent node, system prompt
+  services/               search (providers + budget parsing) · insights (LLM + rule-based) · llm helpers
+  tools/product_search.py LangChain tool used by the agent
+  database/mongodb.py     Motor client, with a mongomock fallback
+  tests/test_api.py       end-to-end API tests (demo mode)
+frontend/src/
+  pages/                  Home · Assistant · Compare · Wishlist · Alerts · Auth · NotFound
+  components/             Layout (nav, toasts, compare tray) · ProductCard · ProductModal · SearchBar
+  context/                AuthContext · ShopContext (wishlist, compare, toasts)
+  lib/api.js              REST client + SSE stream parser
 ```
 
 ---
 
-# 🛠️ Tech Stack
+## Run locally
 
-## Frontend
+Prerequisites: Python 3.11+ and Node 20+.
 
-- React 19
-- Vite
-- Tailwind CSS
-- Framer Motion
-- Lucide React
-- Web Speech API
-
-## Backend
-
-- FastAPI
-- Python 3.11
-- LangChain
-- LangGraph
-
-## AI
-
-- Google Gemini Flash
-- Gemini Vision
-
-## Data & Search
-
-- SerpAPI
-- MongoDB Atlas
-
-## Deployment
-
-- Vercel (Frontend)
-- Render (Backend)
-
----
-
-# 📂 Project Structure
-
-```text
-agentic-ai-shopping-assistant
-│
-├── frontend
-│   ├── src
-│   │   ├── components
-│   │   │   ├── chat
-│   │   │   ├── products
-│   │   ├── services
-│   │   └── App.jsx
-│
-├── backend
-│   ├── api
-│   ├── agents
-│   ├── tools
-│   ├── rag
-│   ├── models
-│   └── main.py
-│
-├── render.yaml
-├── vercel.json
-└── README.md
-```
-
----
-
-# 🔄 Workflow
-
-## Step 1: User Query
-
-User provides:
-- Text
-- Voice
-- Image
-
-Example:
-
-```text
-Best laptop under ₹50,000
-```
-
----
-
-## Step 2: FastAPI Receives Request
-
-Request reaches:
-
-```text
-backend/api/chat.py
-```
-
----
-
-## Step 3: Routing Decision
-
-### Fast Path
-
-Used for:
-
-```text
-Best laptop under ₹50,000
-```
-
-Provides ultra-fast retrieval.
-
-### LangGraph Agent
-
-Used for:
-
-```text
-Compare iPhone 15 vs Samsung S24
-```
-
-Provides deeper reasoning.
-
----
-
-## Step 4: Product Retrieval
-
-Tool:
-
-```text
-backend/tools/product_search.py
-```
-
-Flow:
-
-```text
-MongoDB Cache
- ↓
-SerpAPI
- ↓
-Google Shopping Results
-```
-
----
-
-## Step 5: AI Reasoning
-
-Gemini receives:
-
-- User query
-- Product results
-- Conversation context
-
-Generates:
-
-- Recommendations
-- Comparisons
-- Explanations
-
----
-
-## Step 6: Frontend Rendering
-
-React renders:
-
-- AI responses
-- Product cards
-- Seller links
-- Voice controls
-
----
-
-# 🎤 Voice Features
-
-### Speech-to-Text
-
-- Continuous microphone input
-- Real-time transcription
-
-### Text-to-Speech
-
-- Read AI responses aloud
-- Start/stop controls
-
----
-
-# 🖼️ Vision Features
-
-Powered by Gemini Vision.
-
-Examples:
-
-### Outfit Matching
-
-Upload:
-
-```text
-Black Dress
-```
-
-Ask:
-
-```text
-Suggest matching accessories
-```
-
-### Home Decor
-
-Upload:
-
-```text
-Living Room
-```
-
-Ask:
-
-```text
-Recommend matching furniture
-```
-
----
-
-# ⚡ Performance Optimizations
-
-### Fast Path Router
-
-Reduces latency by bypassing full agent workflows for simple searches.
-
-### MongoDB Query Cache
-
-Stores previously retrieved products for faster future searches.
-
-### Session Isolation
-
-Unique UUID per conversation prevents memory leakage between users.
-
----
-
-# 🔐 Environment Variables
-
-Backend:
-
-```env
-GEMINI_API_KEY=your_key
-SERPAPI_API_KEY=your_key
-MONGO_URI=your_mongodb_uri
-CORS_ORIGINS=https://your-frontend-url.vercel.app
-```
-
-Frontend:
-
-```env
-VITE_API_URL=https://your-backend.onrender.com
-```
-
----
-
-# 🚀 Local Setup
-
-## Clone Repository
-
-```bash
-git clone https://github.com/Nethra-R368/agentic-ai-shopping-assistant.git
-cd agentic-ai-shopping-assistant
-```
-
-## Backend
+**Backend** (http://localhost:8000, API docs at `/docs`)
 
 ```bash
 cd backend
-
 python -m venv .venv
-
-source .venv/bin/activate
-# Windows:
-# .venv\Scripts\activate
-
-pip install -r requirements.txt
-
+.venv\Scripts\activate          # macOS/Linux: source .venv/bin/activate
+pip install -r requirements-dev.txt
+cp .env.example .env            # optional: add your keys
 uvicorn main:app --reload
 ```
 
-## Frontend
+**Frontend** (http://localhost:5173)
 
 ```bash
 cd frontend
-
 npm install
-
 npm run dev
 ```
 
+**Tests**
+
+```bash
+cd backend && pytest -q          # 10 end-to-end API tests, no keys or network needed
+cd frontend && npm run lint && npm run build
+```
+
+### Environment variables
+
+Backend (`backend/.env`, see `.env.example`):
+
+| Variable | Purpose |
+|---|---|
+| `GEMINI_API_KEY` | Google AI Studio key. Turns on AI reasoning, the agent and image search |
+| `GEMINI_MODEL` | Defaults to `gemini-3.1-flash-lite` |
+| `SERPAPI_API_KEY` | Live Google Shopping results |
+| `MONGO_URI` | MongoDB Atlas connection string (in-memory if unset) |
+| `JWT_SECRET` | **Required in production.** A long random string |
+| `CORS_ORIGINS` | Comma-separated frontend URLs (`*.vercel.app` is also allowed) |
+| `SEARCH_COUNTRY` | Google Shopping country, default `in` |
+
+Frontend: `VITE_API_URL`, the backend URL.
+
 ---
 
-# 📈 Future Enhancements
+## Deploy
 
-- Browser Extension
-- Price Tracking Alerts
-- Wishlist Management
-- User Authentication
-- Personalized Recommendations
-- Multi-vendor Price Comparison
-- Mobile Application
+* **Backend → Render:** `backend/render.yaml` is a ready blueprint (health check, auto-generated `JWT_SECRET`). Add `GEMINI_API_KEY`, `SERPAPI_API_KEY`, `MONGO_URI` and `CORS_ORIGINS` in the dashboard.
+* **Frontend → Vercel:** set the root directory to `frontend` and set `VITE_API_URL` to your Render URL. `vercel.json` handles client-side routing.
+* **CI:** GitHub Actions runs the backend tests and the frontend lint and build on every push.
 
----
+## Roadmap
 
-
-
+- Scheduled background price checks with email notifications
+- Price history charts from multiple stores
+- Browser extension for "is this a good deal?" on product pages
+- Personalised recommendations from wishlist history

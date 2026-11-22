@@ -1,13 +1,21 @@
-fastapi==0.111.0
-uvicorn[standard]==0.29.0
-langchain==1.3.1
-langchain-community==0.4.2
-langchain-google-genai==4.2.3
-langgraph==1.2.1
-sentence-transformers==2.7.0
-faiss-cpu==1.8.0
-motor>=3.6.0
-python-dotenv==1.0.1
+fastapi>=0.115,<1
+uvicorn[standard]>=0.30
 pydantic==2.13.4
 pydantic-settings>=2.0.0
-httpx
+python-dotenv>=1.0.1
+httpx>=0.27
+tenacity>=8.2
+
+# AI / agents
+langchain-core>=1.0
+langchain-google-genai==4.2.3
+langgraph==1.2.1
+
+# Storage (MongoDB Atlas in prod, in-memory mongomock when MONGO_URI is unset)
+motor>=3.6.0
+mongomock-motor>=0.0.34
+
+# Auth
+pyjwt>=2.8
+bcrypt>=4.1
+email-validator>=2.1

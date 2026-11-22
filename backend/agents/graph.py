@@ -1,36 +1,17 @@
-from langgraph.graph import StateGraph, START, END
+from langgraph.graph import END, START, StateGraph
 from langgraph.prebuilt import tools_condition
-from agents.state import AgentState
+
 from agents.nodes import chatbot_agent, tool_node
+from agents.state import AgentState
 
-# 1. Initialize the StateGraph
+# agent -> (tools -> agent)* -> END
 workflow = StateGraph(AgentState)
-
-# 2. Add the Nodes
-# We have two main nodes: the LLM reasoning agent, and the Tool execution node
 workflow.add_node("agent", chatbot_agent)
 workflow.add_node("tools", tool_node)
-
-# 3. Define the Edges & Routing Logic
-# Start the workflow at the agent
 workflow.add_edge(START, "agent")
-
-# After the agent runs, we check if it decided to call a tool.
-# `tools_condition` is a built-in router that checks the last message.
-# If there are tool calls, it routes to the "tools" node. 
-# Otherwise, it routes to END (meaning the agent is done and has a final answer).
-workflow.add_conditional_edges(
-    "agent",
-    tools_condition,
-    {
-        "tools": "tools",  # Route to tools node
-        END: END           # Finished
-    }
-)
-
-# After the tools finish executing, we MUST route back to the agent
-# so the LLM can read the tool's output and synthesize a final response.
+workflow.add_conditional_edges("agent", tools_condition, {"tools": "tools", END: END})
 workflow.add_edge("tools", "agent")
 
-# 4. We do not compile the graph here anymore.
-# We compile it in api/chat.py where we can inject the MongoDB checkpointer.
+# Conversation history is persisted in MongoDB by api/chat.py and replayed
+# into the graph each turn, so no LangGraph checkpointer is needed.
+agent_app = workflow.compile()
