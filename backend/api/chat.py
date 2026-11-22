@@ -63,6 +63,27 @@ def _interleave(groups: list[list[Product]]) -> list[Product]:
     return out
 
 
+async def _plain_answer(messages: list, found: list[Product]) -> str:
+    """Tool-free fallback answer, grounded in any products the agent already found."""
+    from agents.prompts import SYSTEM_PROMPT
+    from langchain_core.messages import SystemMessage
+    from services.llm import get_llm
+
+    llm = get_llm(0.3)
+    if llm is None:
+        return ""
+    context = ""
+    if found:
+        context = "\n\nProducts found this turn:\n" + "\n".join(
+            f"- {p.name} — ₹{p.price:,.0f} — rating {p.rating} — specs {p.specifications}" for p in found[:8])
+    try:
+        reply = await llm.ainvoke([SystemMessage(content=SYSTEM_PROMPT + context)] + messages)
+        return text_of(reply.content).strip()
+    except Exception as e:
+        logger.error(f"plain fallback failed: {e}")
+        return ""
+
+
 def sse(event: str, data: dict) -> str:
     return f"event: {event}\ndata: {json.dumps(data, ensure_ascii=False, default=str)}\n\n"
 
@@ -162,6 +183,7 @@ async def run_chat(req: ChatRequest, user: Optional[dict]) -> AsyncIterator[str]
         seen: dict[str, Product] = {}
         groups: list[list[Product]] = []  # one list per tool call, so comparisons interleave fairly
         chunks: list[str] = []
+        final_text = ""
         last_step = None
         try:
             async for ev in agent_app.astream_events({"messages": _history_messages(history) + [user_msg]},
@@ -199,13 +221,28 @@ async def run_chat(req: ChatRequest, user: Optional[dict]) -> AsyncIterator[str]
                         last_step = step
                         chunks.append(piece)
                         yield sse("token", {"text": piece})
+                elif kind == "on_chat_model_end" and ev.get("metadata", {}).get("langgraph_node") == "agent":
+                    out = ev["data"].get("output")
+                    final_text = text_of(getattr(out, "content", "")).strip() or final_text
+                    finish = (getattr(out, "response_metadata", None) or {}).get("finish_reason")
+                    if finish and finish not in ("STOP", "stop"):
+                        logger.warning(f"agent model finish_reason={finish}")
         except Exception as e:
             logger.error(f"agent failed: {e}", exc_info=True)
-            if not chunks:
-                msg = "Sorry — something went wrong while I was researching that. Please try again."
-                chunks.append(msg)
-                yield sse("token", {"text": msg})
-        answer = "".join(chunks).strip() or "I couldn't come up with an answer for that — try rephrasing?"
+
+        answer = "".join(chunks).strip()
+        if not answer and final_text:
+            # The model answered but nothing came through the token stream.
+            answer = final_text
+            yield sse("token", {"text": answer})
+        if not answer:
+            # Occasionally Gemini returns an empty turn after tool use; retry once without tools.
+            answer = await _plain_answer(_history_messages(history) + [user_msg], list(seen.values()))
+            if answer:
+                yield sse("token", {"text": answer})
+        if not answer:
+            answer = "Sorry — I couldn't work that one out. Could you rephrase or name the products you mean?"
+            yield sse("token", {"text": answer})
         products = insights.rule_based_insights(_interleave(groups)[:6])
         if products:
             yield sse("products", {"products": [p.model_dump() for p in products], "provider": provider})
