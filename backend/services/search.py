@@ -293,7 +293,9 @@ async def search_products(query: str, budget: Optional[float] = None, limit: int
             products, provider = await _from_gemini(query, budget, limit), "ai"
         except Exception as e:
             logger.warning(f"Gemini suggestion failed: {e}")
-    if not products:
+            provider = "unavailable"
+    # The sample catalog is only for true demo mode — never mix it into AI/live results.
+    if not products and not settings.has_gemini and not settings.has_serpapi:
         try:
             products, provider = await _from_demo(query, limit), "demo"
         except Exception as e:

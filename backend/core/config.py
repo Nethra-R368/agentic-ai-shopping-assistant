@@ -1,4 +1,8 @@
+from pathlib import Path
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+ENV_FILE = Path(__file__).resolve().parent.parent / ".env"  # backend/.env, wherever the server is started from
 
 
 class Settings(BaseSettings):
@@ -12,6 +16,7 @@ class Settings(BaseSettings):
 
     GEMINI_API_KEY: str = ""
     GEMINI_MODEL: str = "gemini-3.1-flash-lite"
+    GEMINI_FALLBACK_MODEL: str = "gemini-2.5-flash"  # used automatically if the main model is overloaded
     SERPAPI_API_KEY: str = ""
     MONGO_URI: str = ""
     MONGO_DB_NAME: str = "aurabuy"
@@ -29,7 +34,7 @@ class Settings(BaseSettings):
     LOG_LEVEL: str = "INFO"
     PORT: int = 8000
 
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
+    model_config = SettingsConfigDict(env_file=ENV_FILE, env_file_encoding="utf-8", extra="ignore")
 
     @property
     def has_gemini(self) -> bool:
