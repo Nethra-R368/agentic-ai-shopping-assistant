@@ -11,20 +11,20 @@ Everything you need for Devpost, Unstop, Devfolio or an internship review.
 
 ---
 
-## Voice-over script (about 1 min 45 s)
+## Voice-over script (about 1 min 30 s)
 
 Read it at a relaxed pace. Each block lines up with a scene in the video (`video/scenes.txt` has the exact timestamps).
 
 | Scene | Say this |
 |---|---|
 | **Home** (0:00) | "Online shopping in India means twenty open tabs: Amazon, Flipkart, reviews, YouTube. I built **AuraBuy** to do that research for you. You tell it what you need, and it tells you what to buy, and why." |
-| **Search** (~0:15) | "I'll ask in plain words, with a budget: *best laptop for coding under seventy thousand rupees.* AuraBuy reads the budget and searches for options that actually fit it." |
-| **Answer** (~0:35) | "Instead of a wall of links, I get one clear pick with the reasoning and the trade-off, plus ranked options. Every card has a badge like *best value* or *top rated*, and the pros and cons come from real price, rating and review data." |
-| **Details** (~0:45) | "Opening a product shows why it fits *my* request, its specs, and a link to compare live store prices. I can also set a price-drop alert from here." |
-| **Follow-up** (~0:52) | "Now a harder question: *iPhone 15 or Galaxy S24?* This goes to a LangGraph agent. It decides to search for each phone separately, then writes a side-by-side table and a verdict on who should pick which." |
-| **Compare** (~1:12) | "I can add finalists to Compare. The table marks the winner on each row, like price, rating and specs, and the AI writes a verdict that I can tune to my use case." |
-| **Wishlist** (~1:27) | "Products I like go to my wishlist. It works without an account, and syncs to my account when I sign in, along with my chats and price alerts." |
-| **Dark mode / end** (~1:33) | "It also has voice input, photo search and dark mode, and works on phones. Under the hood: React, FastAPI, LangGraph and Gemini, with streaming responses and tests running in CI. That's AuraBuy: less scrolling, better buying." |
+| **Search** (0:17) | "I'll ask in plain words, with a budget: *best laptop for coding under seventy thousand rupees.* AuraBuy reads the budget and searches for options that actually fit it." |
+| **Answer** (0:25) | "Instead of a wall of links, I get one clear pick with the reasoning and the trade-off, plus ranked options. Every card has a badge like *best value* or *top rated*, and the pros and cons come from real price, rating and review data." |
+| **Details** (0:34) | "Opening a product shows why it fits *my* request, its specs, and a link to compare live store prices. I can also set a price-drop alert from here." |
+| **Follow-up** (0:41) | "Now a harder question: *iPhone 15 or Galaxy S24?* This goes to a LangGraph agent. It decides to search for each phone separately, then writes a side-by-side table and a verdict on who should pick which." |
+| **Compare** (1:00) | "I can add finalists to Compare. The table marks the winner on each row, like price, rating and specs, and the AI writes a verdict that I can tune to my use case." |
+| **Wishlist** (1:16) | "Products I like go to my wishlist. It works without an account, and syncs to my account when I sign in, along with my chats and price alerts." |
+| **Dark mode / end** (1:21) | "It also has voice input, photo search and dark mode, and works on phones. Under the hood: React, FastAPI, LangGraph and Gemini, with streaming responses and tests running in CI. That's AuraBuy: less scrolling, better buying." |
 
 ### How to add your voice
 1. Open `video/aurabuy-demo.mp4` in **Clipchamp** (built into Windows 11).
