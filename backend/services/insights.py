@@ -79,11 +79,13 @@ def rule_based_summary(query: str, products: list[Product], provider: str) -> st
     prices = [p.price for p in products if p.price]
     rng = f" between **{inr(min(prices))}** and **{inr(max(prices))}**" if prices else ""
     top = next((p for p in products if p.insight and p.insight.badge in {"Best overall", "Best value"}), products[0])
-    lines = [f"I found **{len(products)} options** for *{query}*{rng}.",
-             f"My pick: **{top.name}** — {top.insight.badge.lower() if top.insight and top.insight.badge else 'a strong match'}."]
-    if provider == "demo":
-        lines.append("\n> Demo mode: results come from a sample catalog. Add API keys to search live stores.")
-    elif provider == "ai":
+    if len(products) == 1:
+        rng = f" at **{inr(products[0].price)}**" if products[0].price else ""
+        lines = [f"I found **1 strong match** for *{query}*{rng}: **{top.name}**."]
+    else:
+        lines = [f"I found **{len(products)} options** for *{query}*{rng}.",
+                 f"My pick: **{top.name}** — {top.insight.badge.lower() if top.insight and top.insight.badge else 'a strong match'}."]
+    if provider == "ai":
         lines.append("\n> Prices are AI estimates — tap a product to compare live store prices.")
     return " ".join(lines[:2]) + "".join(lines[2:])
 
@@ -141,10 +143,13 @@ Give each badge to at most one product."""
 # ---------------------------------------------------------------- compare
 def _compare_rows(products: list[Product]) -> list[CompareRow]:
     def winner(values, best):
+        """Index of the strictly best value, or None on ties / too little data."""
         valid = [(i, v) for i, v in enumerate(values) if v]
         if len(valid) < 2:
             return None
-        return best(valid, key=lambda t: t[1])[0]
+        top = best(v for _, v in valid)
+        leaders = [i for i, v in valid if v == top]
+        return leaders[0] if len(leaders) == 1 else None
 
     rows = [
         CompareRow(label="Price", values=[inr(p.price) for p in products],
@@ -157,9 +162,10 @@ def _compare_rows(products: list[Product]) -> list[CompareRow]:
         CompareRow(label="Brand", values=[p.brand or "—" for p in products]),
     ]
     spec_keys = []
+    taken = {r.label.lower() for r in rows}
     for p in products:
         for k in p.specifications:
-            if k not in spec_keys and not k.startswith("Note"):
+            if k not in spec_keys and k.lower() not in taken and not k.startswith("Note"):
                 spec_keys.append(k)
     for k in spec_keys[:8]:
         rows.append(CompareRow(label=k, values=[str(p.specifications.get(k, "—")) for p in products]))

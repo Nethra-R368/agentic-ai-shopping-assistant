@@ -66,7 +66,7 @@ def test_chat_search_with_budget_and_insights(client):
     assert set(names) == {"Alpha Laptop", "Gamma Laptop"}  # Beta is over budget
     assert all(p["insight"]["pros"] for p in data["products"])
     assert data["route"] == "search" and data["provider"] == "demo"
-    assert "Demo mode" in data["text"]
+    assert "2 options" in data["text"]
 
 
 def test_chat_stream_emits_events(client):
