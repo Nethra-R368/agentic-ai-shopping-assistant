@@ -76,7 +76,7 @@ export default function ProductModal() {
             initial={{ y: 40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 40, opacity: 0 }}
             transition={{ type: 'spring', damping: 26, stiffness: 300 }}
             onClick={(e) => e.stopPropagation()}
-            className="card relative max-h-[92vh] w-full max-w-2xl overflow-y-auto lg:max-w-4xl rounded-b-none sm:rounded-2xl scrollbar-thin"
+            className="card relative max-h-[92vh] w-full max-w-2xl overflow-y-auto lg:max-w-4xl rounded-b-none sm:rounded-lg scrollbar-thin"
           >
             <button onClick={closeProduct} className="btn-icon absolute right-3 top-3 z-10 bg-surface" aria-label="Close"><X className="h-5 w-5" /></button>
             <div className="grid gap-0 lg:grid-cols-[1fr_1.2fr]">
@@ -84,16 +84,16 @@ export default function ProductModal() {
               <div className="flex flex-col gap-4 p-6">
                 <div>
                   <div className="mb-1 flex flex-wrap items-center gap-2 text-xs text-muted">
-                    {p.insight?.badge && <span className="rounded-full bg-brand-soft px-2 py-0.5 font-semibold text-brand">{p.insight.badge}</span>}
+                    {p.insight?.badge && <span className="rounded-sm border border-ink px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-ink">{p.insight.badge}</span>}
                     {p.seller && p.seller !== providerLabel[p.provider] && <><span>{p.seller}</span><span>·</span></>}
                     <span>{providerLabel[p.provider] || p.provider}</span>
                   </div>
-                  <h2 className="text-xl font-semibold leading-snug">{p.name}</h2>
+                  <h2 className="text-3xl leading-tight">{p.name}</h2>
                   <div className="mt-2"><Stars rating={p.rating} count={p.reviews_count} /></div>
                 </div>
 
                 <div className="flex items-end gap-3">
-                  <span className="text-3xl font-bold">{inr(p.price)}</span>
+                  <span className="font-mono text-3xl font-medium">{inr(p.price)}</span>
                   {discountPct(p) > 0 && (
                     <span className="mb-1 text-sm text-muted"><s>{inr(p.original_price)}</s> <span className="font-semibold text-success">{discountPct(p)}% off</span></span>
                   )}
@@ -121,7 +121,7 @@ export default function ProductModal() {
                 )}
 
                 {Object.keys(p.specifications || {}).length > 0 && (
-                  <dl className="divide-y divide-line rounded-xl border border-line text-sm">
+                  <dl className="divide-y divide-line rounded-md border border-line text-sm">
                     {Object.entries(p.specifications).map(([k, v]) => (
                       <div key={k} className="flex justify-between gap-4 px-3 py-2">
                         <dt className="text-muted">{k}</dt><dd className="text-right font-medium">{String(v)}</dd>

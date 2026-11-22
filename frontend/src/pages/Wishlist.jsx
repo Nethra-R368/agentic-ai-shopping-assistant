@@ -14,7 +14,7 @@ export default function Wishlist() {
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold">Wishlist</h1>
+          <h1 className="text-5xl">Wishlist</h1>
           <p className="mt-1 text-muted">
             {wishlist.length ? `${wishlist.length} saved · ${inr(total)} total` : 'Products you save will show up here.'}
           </p>
@@ -26,7 +26,7 @@ export default function Wishlist() {
 
       {wishlist.length === 0 ? (
         <div className="mx-auto max-w-md py-20 text-center">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-soft text-brand"><Heart className="h-7 w-7" /></div>
+          <Heart className="mx-auto h-8 w-8 text-muted" strokeWidth={1.5} />
           <p className="mt-5 text-muted">Tap the heart on any product to save it for later.</p>
           <Link to="/assistant" className="btn-primary mt-6">Start shopping</Link>
         </div>

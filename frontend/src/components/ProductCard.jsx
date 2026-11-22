@@ -5,19 +5,19 @@ import { discountPct, inr } from '../lib/format';
 import ProductImage from './ProductImage';
 
 const BADGE_STYLES = {
-  'Best overall': 'bg-brand text-white',
-  'Best value': 'bg-success text-white',
-  'Top rated': 'bg-warning text-white',
-  'Budget pick': 'bg-success text-white',
-  'Lowest price': 'bg-success text-white',
-  'Premium pick': 'bg-ink text-bg',
+  'Best overall': 'bg-primary text-on-primary',
+  'Best value': 'bg-surface text-ink border border-ink',
+  'Top rated': 'bg-surface text-ink border border-line',
+  'Budget pick': 'bg-surface text-ink border border-line',
+  'Lowest price': 'bg-surface text-ink border border-line',
+  'Premium pick': 'bg-surface text-ink border border-line',
 };
 
 export function Stars({ rating, count }) {
   if (!rating) return <span className="text-xs text-muted">No ratings</span>;
   return (
     <span className="inline-flex items-center gap-1 text-xs text-muted">
-      <Star className="h-3.5 w-3.5 fill-warning text-warning" />
+      <Star className="h-3 w-3 fill-ink text-ink" />
       <span className="font-semibold text-ink">{rating}</span>
       {count ? <span>({count.toLocaleString('en-IN')})</span> : null}
     </span>
@@ -36,19 +36,19 @@ export default function ProductCard({ product, index = 0 }) {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: Math.min(index, 8) * 0.04 }}
-      className="group card flex flex-col overflow-hidden transition hover:-translate-y-0.5 hover:border-brand/40"
+      className="group card flex flex-col overflow-hidden transition hover:border-ink/40"
     >
       <div className="relative">
         <button onClick={() => openProduct(product)} className="block w-full cursor-pointer" aria-label={`View details for ${product.name}`}>
           <ProductImage product={product} className="aspect-[4/3] w-full" />
         </button>
         <div className="absolute left-3 top-3 flex flex-col items-start gap-1.5">
-          {badge && <span className={`rounded-full px-2.5 py-1 text-[11px] font-semibold shadow ${BADGE_STYLES[badge] || 'bg-brand text-white'}`}>{badge}</span>}
-          {off > 0 && <span className="rounded-full bg-danger px-2.5 py-1 text-[11px] font-semibold text-white shadow">{off}% off</span>}
+          {badge && <span className={`rounded-sm px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider ${BADGE_STYLES[badge] || BADGE_STYLES['Top rated']}`}>{badge}</span>}
+          {off > 0 && <span className="rounded-sm bg-brand px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-white">−{off}%</span>}
         </div>
         <button
           onClick={() => toggleWishlist(product)}
-          className={`absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full border border-line bg-surface/90 shadow backdrop-blur transition cursor-pointer hover:scale-105 ${saved ? 'text-danger' : 'text-muted hover:text-danger'}`}
+          className={`absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-surface/90 transition cursor-pointer ${saved ? 'text-brand' : 'text-muted hover:text-ink'}`}
           aria-label={saved ? 'Remove from wishlist' : 'Save to wishlist'}
           aria-pressed={saved}
         >
@@ -62,20 +62,20 @@ export default function ProductCard({ product, index = 0 }) {
           <Stars rating={product.rating} count={product.reviews_count} />
         </div>
         <button onClick={() => openProduct(product)} className="text-left cursor-pointer">
-          <h3 className="font-sans text-[15px] font-semibold leading-snug line-clamp-2 hover:text-brand">{product.name}</h3>
+          <h3 className="text-[15px] font-medium leading-snug line-clamp-2 hover:underline underline-offset-2">{product.name}</h3>
         </button>
         {product.insight?.why && <p className="text-sm text-muted line-clamp-2">{product.insight.why}</p>}
 
         <div className="mt-auto flex items-end justify-between gap-2 pt-2">
           <div>
-            <div className="text-lg font-bold">{inr(product.price)}</div>
+            <div className="font-mono text-[17px] font-medium">{inr(product.price)}</div>
             {off > 0 && <div className="text-xs text-muted line-through">{inr(product.original_price)}</div>}
-            {product.provider === 'ai' && <div className="text-[11px] text-muted">est. price</div>}
+            {product.provider === 'ai' && <div className="font-mono text-[10px] uppercase tracking-wider text-muted">est. price</div>}
           </div>
           <div className="flex gap-1.5">
             <button
               onClick={() => toggleCompare(product)}
-              className={`btn-icon h-9 w-9 border ${comparing ? 'border-brand bg-brand-soft text-brand' : 'border-line'}`}
+              className={`btn-icon h-9 w-9 border ${comparing ? 'border-ink bg-primary text-on-primary hover:bg-primary hover:text-on-primary' : 'border-line'}`}
               aria-label={comparing ? 'Remove from compare' : 'Add to compare'}
               aria-pressed={comparing}
               title={comparing ? 'Remove from compare' : 'Compare'}
@@ -83,8 +83,9 @@ export default function ProductCard({ product, index = 0 }) {
               <GitCompareArrows className="h-4 w-4" />
             </button>
             {product.product_url && (
-              <a href={product.product_url} target="_blank" rel="noopener noreferrer" className="btn-primary h-9 px-3 text-xs">
-                {product.provider === 'serpapi' ? 'View deal' : 'Compare prices'} <ExternalLink className="h-3.5 w-3.5" />
+              <a href={product.product_url} target="_blank" rel="noopener noreferrer" className="btn-primary h-9 whitespace-nowrap px-3 text-xs"
+                title={product.provider === 'serpapi' ? `Open on ${product.seller}` : 'See live prices across stores'}>
+                {product.provider === 'serpapi' ? 'View deal' : 'Prices'} <ExternalLink className="h-3.5 w-3.5" />
               </a>
             )}
           </div>
