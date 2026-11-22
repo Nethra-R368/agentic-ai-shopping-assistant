@@ -1,23 +1,47 @@
-from pydantic_settings import BaseSettings, SettingsConfigDict
+﻿from pydantic_settings import BaseSettings, SettingsConfigDict
+
 
 class Settings(BaseSettings):
+    """Central configuration, read from environment variables or backend/.env.
+
+    Every key is optional so the app always boots:
+      - no GEMINI_API_KEY  -> rule-based summaries instead of LLM reasoning
+      - no SERPAPI_API_KEY -> AI-suggested products (with Gemini) or the demo catalog
+      - no MONGO_URI       -> in-memory database (data resets on restart)
     """
-    Centralized configuration management for the backend.
-    Reads from .env file or environment variables.
-    """
-    GEMINI_API_KEY: str
+
+    GEMINI_API_KEY: str = ""
+    GEMINI_MODEL: str = "gemini-3.1-flash-lite"
     SERPAPI_API_KEY: str = ""
-    MONGO_URI: str = "mongodb://localhost:27017"
-    PORT: int = 8000
+    MONGO_URI: str = ""
+    MONGO_DB_NAME: str = "aurabuy"
+
+    JWT_SECRET: str = "dev-only-insecure-secret-change-me-in-production"
+    JWT_EXPIRE_HOURS: int = 24 * 7
+
+    CORS_ORIGINS: str = "http://localhost:5173,http://127.0.0.1:5173"
+    CURRENCY: str = "INR"
+    SEARCH_COUNTRY: str = "in"
+    QUERY_CACHE_TTL_SECONDS: int = 3600
+    MAX_IMAGE_BYTES: int = 5 * 1024 * 1024
+
     ENVIRONMENT: str = "development"
     LOG_LEVEL: str = "INFO"
+    PORT: int = 8000
 
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
-# Instantiate the settings so it can be imported anywhere
-try:
-    settings = Settings()
-except Exception as e:
-    print(f"CRITICAL CONFIG ERROR: Ensure you have a .env file with GEMINI_API_KEY. Details: {e}")
-    # Provide dummy settings to prevent crash during imports if .env is missing
-    settings = Settings(GEMINI_API_KEY="dummy", MONGO_URI="mongodb://localhost:27017")
+    @property
+    def has_gemini(self) -> bool:
+        return bool(self.GEMINI_API_KEY) and self.GEMINI_API_KEY not in {"dummy", "your_key"}
+
+    @property
+    def has_serpapi(self) -> bool:
+        return bool(self.SERPAPI_API_KEY) and self.SERPAPI_API_KEY not in {"your_serpapi_key_here", "your_key"}
+
+    @property
+    def cors_origins(self) -> list[str]:
+        return [o.strip() for o in self.CORS_ORIGINS.split(",") if o.strip()]
+
+
+settings = Settings()
