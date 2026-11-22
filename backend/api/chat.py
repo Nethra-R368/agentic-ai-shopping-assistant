@@ -55,6 +55,14 @@ def choose_route(message: str, has_image: bool, has_history: bool) -> str:
     return "search"
 
 
+def _interleave(groups: list[list[Product]]) -> list[Product]:
+    """Round-robin across searches: [A1, B1, A2, B2, ...] so both sides of a comparison show up."""
+    out = []
+    for i in range(max((len(g) for g in groups), default=0)):
+        out.extend(g[i] for g in groups if i < len(g))
+    return out
+
+
 def sse(event: str, data: dict) -> str:
     return f"event: {event}\ndata: {json.dumps(data, ensure_ascii=False, default=str)}\n\n"
 
@@ -152,6 +160,7 @@ async def run_chat(req: ChatRequest, user: Optional[dict]) -> AsyncIterator[str]
             yield sse("status", {"text": "Thinking"})
 
         seen: dict[str, Product] = {}
+        groups: list[list[Product]] = []  # one list per tool call, so comparisons interleave fairly
         chunks: list[str] = []
         last_step = None
         try:
@@ -164,12 +173,17 @@ async def run_chat(req: ChatRequest, user: Optional[dict]) -> AsyncIterator[str]
                 elif kind == "on_tool_end":
                     out = ev["data"].get("output")
                     raw = text_of(getattr(out, "content", out))
+                    group = []
                     for item in extract_products(raw):
                         p = Product(**item)
-                        seen.setdefault(p.id, p)
+                        if p.id not in seen:
+                            seen[p.id] = p
+                            group.append(p)
                         provider = p.provider
+                    if group:
+                        groups.append(group)
                     if seen:
-                        yield sse("products", {"products": [p.model_dump() for p in list(seen.values())[:8]],
+                        yield sse("products", {"products": [p.model_dump() for p in _interleave(groups)[:8]],
                                                "provider": provider})
                         yield sse("status", {"text": "Writing recommendation"})
                 elif kind == "on_chat_model_stream":
@@ -192,7 +206,7 @@ async def run_chat(req: ChatRequest, user: Optional[dict]) -> AsyncIterator[str]
                 chunks.append(msg)
                 yield sse("token", {"text": msg})
         answer = "".join(chunks).strip() or "I couldn't come up with an answer for that — try rephrasing?"
-        products = insights.rule_based_insights(list(seen.values())[:8])
+        products = insights.rule_based_insights(_interleave(groups)[:6])
         if products:
             yield sse("products", {"products": [p.model_dump() for p in products], "provider": provider})
 

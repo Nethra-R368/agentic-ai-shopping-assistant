@@ -79,11 +79,11 @@ export default function SearchBar({ onSubmit, disabled, placeholder, size = 'lg'
       onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
       onDragLeave={() => setDragging(false)}
       onDrop={(e) => { e.preventDefault(); setDragging(false); attach(e.dataTransfer.files?.[0]); }}
-      className={`card relative flex flex-col gap-2 transition focus-within:border-brand/60 focus-within:ring-4 focus-within:ring-brand/10 ${big ? 'p-3' : 'p-2'} ${dragging ? 'border-brand ring-4 ring-brand/20' : ''}`}
+      className={`card relative flex flex-col gap-2 transition focus-within:border-ink/60 ${big ? 'p-3' : 'p-2'} ${dragging ? 'border-ink border-dashed' : ''}`}
     >
       {image && (
         <div className="flex items-center gap-3 px-1 pt-1">
-          <div className="relative h-14 w-14 overflow-hidden rounded-lg border border-line">
+          <div className="relative h-14 w-14 overflow-hidden rounded-md border border-line">
             <img src={image} alt="Attached" className="h-full w-full object-cover" />
             <button type="button" onClick={() => setImage(null)} className="absolute right-0.5 top-0.5 rounded-full bg-black/60 p-0.5 text-white cursor-pointer" aria-label="Remove image">
               <X className="h-3 w-3" />

@@ -38,7 +38,7 @@ function AlertRow({ alert, onChange, onDelete }) {
 
   return (
     <div className={`card flex flex-col gap-4 p-4 sm:flex-row sm:items-center ${alert.triggered ? 'border-success/50' : ''}`}>
-      <button onClick={() => openProduct(alert.product)} className="h-20 w-20 shrink-0 overflow-hidden rounded-xl border border-line cursor-pointer">
+      <button onClick={() => openProduct(alert.product)} className="h-20 w-20 shrink-0 overflow-hidden rounded-md border border-line cursor-pointer">
         <ProductImage product={alert.product} className="h-full w-full" />
       </button>
       <div className="min-w-0 flex-1">
@@ -86,8 +86,8 @@ export default function Alerts() {
   if (!user) {
     return (
       <div className="mx-auto max-w-md px-4 py-24 text-center">
-        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-soft text-brand"><BellRing className="h-7 w-7" /></div>
-        <h1 className="mt-5 text-3xl font-bold">Price alerts</h1>
+        <BellRing className="mx-auto h-8 w-8 text-muted" strokeWidth={1.5} />
+        <h1 className="mt-5 text-5xl">Price alerts</h1>
         <p className="mt-2 text-muted">Sign in to set target prices on products and track when they drop.</p>
         <Link to="/login" state={{ from: '/alerts' }} className="btn-primary mt-8">Sign in</Link>
       </div>
@@ -109,7 +109,7 @@ export default function Alerts() {
     <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold">Price alerts</h1>
+          <h1 className="text-5xl">Price alerts</h1>
           <p className="mt-1 text-muted">Open any product and choose “Set alert” to start tracking it.</p>
         </div>
         {alerts?.length > 0 && (

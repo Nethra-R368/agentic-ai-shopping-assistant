@@ -5,7 +5,7 @@ import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-do
 import { useAuth } from '../context/AuthContext';
 import { useShop } from '../context/ShopContext';
 import { api } from '../lib/api';
-import Logo from './Logo';
+import { Wordmark } from './Logo';
 import ProductModal from './ProductModal';
 
 function useTheme() {
@@ -44,14 +44,13 @@ function Navbar() {
   }
 
   const linkClass = ({ isActive }) =>
-    `relative inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition ${isActive ? 'bg-brand-soft text-brand' : 'text-muted hover:text-ink hover:bg-surface-2'}`;
+    `relative inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm transition ${isActive ? 'text-ink font-medium bg-surface-2' : 'text-muted hover:text-ink'}`;
 
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-bg/80 backdrop-blur-lg">
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4 sm:px-6">
-        <Link to="/" className="flex items-center gap-2.5" aria-label="AuraBuy home">
-          <Logo className="h-8 w-8" />
-          <span className="font-display text-lg font-bold tracking-tight">AuraBuy</span>
+        <Link to="/" className="flex items-center" aria-label="AuraBuy home">
+          <Wordmark />
         </Link>
 
         <nav className="ml-6 hidden items-center gap-1 md:flex" aria-label="Main">
@@ -59,7 +58,7 @@ function Navbar() {
             <NavLink key={to} to={to} className={linkClass}>
               <Icon className="h-4 w-4" /> {label}
               {count && shop[count].length > 0 && (
-                <span className="rounded-full bg-brand px-1.5 text-[11px] font-semibold leading-5 text-white">{shop[count].length}</span>
+                <span className="font-mono text-[11px] text-brand">{shop[count].length}</span>
               )}
             </NavLink>
           ))}
@@ -71,8 +70,8 @@ function Navbar() {
           </button>
           {user ? (
             <div className="relative">
-              <button onClick={() => setMenu(!menu)} className="flex h-10 items-center gap-2 rounded-xl px-2 hover:bg-surface-2 cursor-pointer" aria-haspopup="menu" aria-expanded={menu}>
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-brand to-brand-2 text-sm font-bold text-white">
+              <button onClick={() => setMenu(!menu)} className="flex h-10 items-center gap-2 rounded-md px-2 hover:bg-surface-2 cursor-pointer" aria-haspopup="menu" aria-expanded={menu}>
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm font-medium text-on-primary">
                   {user.name[0]?.toUpperCase()}
                 </span>
                 <span className="hidden text-sm font-medium sm:inline">{user.name.split(' ')[0]}</span>
@@ -123,7 +122,7 @@ function CompareTray() {
   if (compare.length === 0 || location.pathname === '/compare' || location.pathname.startsWith('/assistant')) return null;
   return (
     <motion.div initial={{ y: 80 }} animate={{ y: 0 }} className="fixed inset-x-0 bottom-4 z-30 flex justify-center px-4">
-      <div className="card flex w-full max-w-xl items-center gap-3 p-2.5 pl-4">
+      <div className="card flex w-full max-w-xl items-center gap-3 p-2.5 pl-4 shadow-lg">
         <div className="flex -space-x-2">
           {compare.map((p) => (
             <button key={p.id} onClick={() => toggleCompare(p)} title={`Remove ${p.name}`} className="h-9 w-9 overflow-hidden rounded-full border-2 border-surface bg-white cursor-pointer">
@@ -158,35 +157,53 @@ function Toasts() {
 
 function ModeBanner() {
   const [health, setHealth] = useState(null);
-  const [offline, setOffline] = useState(false);
-  useEffect(() => { api.health().then(setHealth).catch(() => setOffline(true)); }, []);
-  if (offline) {
-    return <div className="bg-danger/10 px-4 py-2 text-center text-sm text-danger">Can't reach the AuraBuy server — start the backend (see README) and refresh.</div>;
+  const [state, setState] = useState('checking'); // checking | waking | ok | offline
+  useEffect(() => {
+    // Free hosting sleeps when idle; tell people why the first request is slow.
+    const slow = setTimeout(() => setState((s) => (s === 'checking' ? 'waking' : s)), 2500);
+    const ctrl = new AbortController();
+    const giveUp = setTimeout(() => ctrl.abort(), 75000);
+    api.health(ctrl.signal)
+      .then((h) => { setHealth(h); setState('ok'); })
+      .catch(() => setState('offline'))
+      .finally(() => { clearTimeout(slow); clearTimeout(giveUp); });
+    return () => { clearTimeout(slow); clearTimeout(giveUp); };
+  }, []);
+  const base = 'border-b border-line px-4 py-2 text-center text-[13px]';
+  if (state === 'waking') {
+    return <div className={`${base} bg-surface-2 text-muted`}><span className="mr-2 inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-brand align-middle" />Waking up the server — the free hosting naps when idle. This takes up to 30 seconds, once.</div>;
+  }
+  if (state === 'offline') {
+    return <div className={`${base} bg-brand-soft text-danger`}>Can't reach the AuraBuy server right now. Please refresh in a minute.</div>;
   }
   if (health?.mode === 'demo') {
-    return <div className="bg-brand-soft px-4 py-2 text-center text-sm text-brand">Demo mode: results come from a sample catalog. Add API keys on the server for live prices.</div>;
+    return <div className={`${base} bg-surface-2 text-muted`}>Demo mode — results come from a sample catalog.</div>;
   }
   return null;
 }
 
 function Footer() {
   return (
-    <footer className="mt-24 border-t border-line">
-      <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-        <div className="flex items-center gap-2.5">
-          <Logo className="h-7 w-7" />
-          <div>
-            <div className="font-display font-bold">AuraBuy</div>
-            <div className="text-xs text-muted">Your AI shopping concierge</div>
-          </div>
+    <footer className="mt-28 border-t border-line">
+      <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-[1.4fr_1fr_1fr]">
+        <div>
+          <Wordmark />
+          <p className="mt-3 max-w-sm text-sm leading-relaxed text-muted">
+            A shopping assistant that reads the specs, prices and reviews for you, then tells you plainly which one to buy.
+          </p>
         </div>
-        <nav className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted" aria-label="Footer">
-          <Link to="/assistant" className="hover:text-ink">Assistant</Link>
-          <Link to="/compare" className="hover:text-ink">Compare</Link>
-          <Link to="/wishlist" className="hover:text-ink">Wishlist</Link>
-          <Link to="/alerts" className="hover:text-ink">Price alerts</Link>
+        <nav className="flex flex-col gap-2 text-sm" aria-label="Footer">
+          <span className="eyebrow mb-1">Use it</span>
+          <Link to="/assistant" className="text-muted hover:text-ink">Assistant</Link>
+          <Link to="/compare" className="text-muted hover:text-ink">Compare</Link>
+          <Link to="/wishlist" className="text-muted hover:text-ink">Wishlist</Link>
+          <Link to="/alerts" className="text-muted hover:text-ink">Price alerts</Link>
         </nav>
-        <p className="text-xs text-muted">AuraBuy doesn't sell anything — it finds and explains options, then links you to the store. Prices can change.</p>
+        <div className="flex flex-col gap-2 text-sm">
+          <span className="eyebrow mb-1">Good to know</span>
+          <p className="text-muted">AuraBuy doesn't sell anything or take commissions. It links you to the store — always check the final price there.</p>
+          <a href="https://github.com/Nethra-R368/agentic-ai-shopping-assistant" target="_blank" rel="noopener noreferrer" className="text-muted underline underline-offset-2 hover:text-ink">Source on GitHub</a>
+        </div>
       </div>
     </footer>
   );

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import Logo from '../components/Logo';
+import { Wordmark } from '../components/Logo';
 import { useAuth } from '../context/AuthContext';
 import { useShop } from '../context/ShopContext';
 
@@ -32,10 +32,10 @@ export default function Auth({ mode }) {
   };
 
   return (
-    <div className="aura-glow flex min-h-[calc(100dvh-4rem)] items-center justify-center px-4 py-12">
+    <div className="flex min-h-[calc(100dvh-4rem)] items-center justify-center px-4 py-12">
       <div className="card w-full max-w-md p-8">
-        <Logo className="h-10 w-10" />
-        <h1 className="mt-5 text-2xl font-bold">{isLogin ? 'Welcome back' : 'Create your account'}</h1>
+        <Wordmark />
+        <h1 className="mt-6 text-4xl">{isLogin ? 'Welcome back' : 'Create your account'}</h1>
         <p className="mt-1 text-sm text-muted">
           {isLogin ? 'Sign in to sync your wishlist, chats and price alerts.' : 'Save products, keep your chats and get price-drop alerts.'}
         </p>

@@ -134,9 +134,9 @@ function UserMessage({ msg }) {
   return (
     <div className="flex justify-end">
       <div className="max-w-[85%] space-y-2">
-        {typeof msg.image === 'string' && <img src={msg.image} alt="Your upload" className="ml-auto max-h-48 rounded-2xl border border-line" />}
-        {msg.image === true && <div className="ml-auto w-fit rounded-xl bg-surface-2 px-3 py-1 text-xs text-muted">📷 Image</div>}
-        <div className="rounded-2xl rounded-br-md bg-brand px-4 py-2.5 text-[15px] text-white">{msg.content}</div>
+        {typeof msg.image === 'string' && <img src={msg.image} alt="Your upload" className="ml-auto max-h-48 rounded-md border border-line" />}
+        {msg.image === true && <div className="ml-auto w-fit font-mono text-[11px] uppercase tracking-wider text-muted">[ photo attached ]</div>}
+        <div className="rounded-lg bg-surface-2 px-4 py-2.5 text-[15px]">{msg.content}</div>
       </div>
     </div>
   );
@@ -258,11 +258,11 @@ export default function Assistant() {
   const Sidebar = (
     <div className="flex h-full flex-col gap-3 p-3">
       <button onClick={newChat} className="btn-primary w-full"><MessageSquarePlus className="h-4 w-4" /> New chat</button>
-      <div className="px-1 pt-2 text-xs font-semibold uppercase tracking-wide text-muted">Recent</div>
+      <div className="eyebrow px-1 pt-3">Recent</div>
       <div className="-mx-1 flex-1 space-y-0.5 overflow-y-auto px-1 scrollbar-thin">
         {conversations.length === 0 && <p className="px-2 text-sm text-muted">Your chats will appear here.</p>}
         {conversations.map((c) => (
-          <div key={c.id} className={`group flex items-center rounded-lg ${c.id === sessionId ? 'bg-brand-soft' : 'hover:bg-surface-2'}`}>
+          <div key={c.id} className={`group flex items-center rounded-lg ${c.id === sessionId ? 'bg-surface-2' : 'hover:bg-surface-2'}`}>
             <button onClick={() => { setSidebar(false); navigate(`/assistant/${c.id}`); }} className="min-w-0 flex-1 px-3 py-2 text-left cursor-pointer">
               <div className="truncate text-sm">{c.title}</div>
               <div className="text-[11px] text-muted">{timeAgo(c.updated_at)}</div>
@@ -300,12 +300,12 @@ export default function Assistant() {
           <div className="mx-auto max-w-4xl space-y-8 px-4 py-8 sm:px-6">
             {messages.length === 0 ? (
               <div className="pt-10 text-center">
-                <Logo className="mx-auto h-14 w-14" />
-                <h1 className="mt-5 text-3xl font-bold">What are you shopping for?</h1>
+                <Logo className="mx-auto h-10 w-10" />
+                <h1 className="mt-6 text-5xl">What are you shopping for?</h1>
                 <p className="mx-auto mt-2 max-w-md text-muted">Ask in plain words, add a budget, upload a photo, or tap the mic.</p>
                 <div className="mx-auto mt-8 grid max-w-2xl gap-2 sm:grid-cols-2">
                   {STARTERS.map((s) => (
-                    <button key={s} onClick={() => send({ message: s })} className="card p-4 text-left text-sm hover:border-brand/50 cursor-pointer">{s}</button>
+                    <button key={s} onClick={() => send({ message: s })} className="card p-4 text-left text-sm hover:border-ink/50 cursor-pointer">{s}</button>
                   ))}
                 </div>
               </div>
