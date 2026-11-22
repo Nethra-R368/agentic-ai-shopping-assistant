@@ -125,6 +125,34 @@ def test_compare_rule_based(client):
     assert data["verdict"] and data["ai"] is False
 
 
+def test_agent_empty_reply_never_reaches_user_blank(client, monkeypatch):
+    """If the agent streams no text, the user must still get an answer (fallback or apology)."""
+    import api.chat as chat_api
+    from agents.graph import agent_app
+
+    monkeypatch.setattr(settings, "GEMINI_API_KEY", "fake-key-for-test")
+
+    async def silent_events(*args, **kwargs):
+        if False:
+            yield {}
+
+    async def fallback(messages, found):
+        return "Fallback answer"
+
+    monkeypatch.setattr(agent_app, "astream_events", silent_events)
+    monkeypatch.setattr(chat_api, "_plain_answer", fallback)
+    r = client.post("/api/chat", json={"message": "which one has the best battery?", "session_id": str(uuid.uuid4())})
+    assert r.status_code == 200
+    assert r.json()["route"] == "agent" and r.json()["text"] == "Fallback answer"
+
+    async def no_fallback(messages, found):
+        return ""
+
+    monkeypatch.setattr(chat_api, "_plain_answer", no_fallback)
+    r = client.post("/api/chat", json={"message": "which one has the best battery?", "session_id": str(uuid.uuid4())})
+    assert "rephrase" in r.json()["text"]
+
+
 def test_conversations_are_private(client):
     h1, h2 = register(client), register(client)
     sid = str(uuid.uuid4())

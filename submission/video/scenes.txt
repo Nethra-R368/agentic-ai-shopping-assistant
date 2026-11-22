@@ -1,0 +1,11 @@
+0.0s  Home page — the pitch
+17.0s  Natural-language search with a budget
+24.8s  Answer: one clear pick + ranked options
+34.5s  Product details: why it fits, pros & cons, specs
+40.6s  Follow-up: compare two specific phones
+50.0s  Agent answer: comparison table + verdict
+60.0s  Add finalists to Compare
+66.4s  Compare page: verdict + spec table with winners
+75.8s  Save to wishlist
+81.4s  Dark mode
+88.7s  End
